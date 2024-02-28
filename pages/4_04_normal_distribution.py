@@ -49,7 +49,6 @@ def main():
         size = st.slider('Number of simulations', min_value=1, max_value=10000, value=5000)
 
     with col12:
-        st.write('**Simulations**')
         normal_dist = NormalDistribution(mean, std_dev, size)
         normal_dist.plot_simulation_pdf_cdf()
         
