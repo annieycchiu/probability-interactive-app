@@ -4,16 +4,17 @@ import math
 import plotly.graph_objs as go
 import streamlit as st
 
-USF_Green = '#00543C'
-USF_Yellow = '#FDBB30'
-USF_Gray = '#75787B'
-
+colors = {
+    'USF_Green': '#00543C',
+    'USF_Yellow': '#FDBB30',
+    'USF_Gray': '#75787B'
+}
 
 
 ## Binomial Distribution
 
 class BinomialPMF:
-    def __init__(self, n, p, color=USF_Green):
+    def __init__(self, n, p, color=colors['USF_Green']):
         """
         Parameters:
         - n (int): Number of trials.
@@ -34,8 +35,7 @@ class BinomialPMF:
         x = np.arange(0, self.n + 1)
 
         # Calculate PMF using binomial distribution formula
-        pmf_prob = np.array([round(math.comb(self.n, k) * (self.p**k) * ((1 - self.p)**(self.n - k)), 3) for k in x])
-        self.pmf_prob = pmf_prob
+        self.pmf_prob = np.array([round(math.comb(self.n, k) * (self.p**k) * ((1 - self.p)**(self.n - k)), 3) for k in x])
 
     def plot_pmf(self):
         """
@@ -107,13 +107,13 @@ class BinomialPMF:
 
 
 class BinomialSimulation:
-    def __init__(self, n, p, size=1, color=USF_Green):
+    def __init__(self, n, p, size=1, color=colors['USF_Green']):
         """
         Parameters:
         - n (int): Number of trials.
         - p (float): Probability of success for each trial.
-        - size (int): Number of simulations to run (default is '#00543C').
-        - color (str): Color for the plot (default is 1).
+        - size (int): Number of simulations to run (default is 1).
+        - color (str): Color for the plot (default is '#00543C').
         """
         self.n = n
         self.p = p
@@ -127,8 +127,7 @@ class BinomialSimulation:
         Simulate binomial data based on the provided parameters.
         """
         outcomes = np.random.rand(self.size, self.n) < self.p
-        simulated_data = np.sum(outcomes, axis=1)
-        self.simulated_data = simulated_data
+        self.simulated_data = np.sum(outcomes, axis=1)
 
     def plot_simulation(self):
         """
@@ -181,7 +180,7 @@ class BinomialSimulation:
 ## Poisson Distribution
         
 class PoissonPMF:
-    def __init__(self, lmbda, color=USF_Green):
+    def __init__(self, lmbda, color=colors['USF_Green']):
         """
         Parameters:
         - lmbda (float): Average rate of the Poisson distribution.
@@ -202,8 +201,7 @@ class PoissonPMF:
         x = range(self.k_limit)
 
         # Calculate PMF using Poisson distribution formula
-        pmf_prob = np.array([round((np.exp(-self.lmbda) * self.lmbda**k) / math.factorial(k), 3) for k in x])
-        self.pmf_prob = pmf_prob
+        self.pmf_prob = np.array([round((np.exp(-self.lmbda) * self.lmbda**k) / math.factorial(k), 3) for k in x])
 
     def plot_pmf(self):
         """
@@ -268,7 +266,7 @@ class PoissonPMF:
 
 
 class PoissonSimulation:
-    def __init__(self, lmbda, size=1, color=USF_Green):
+    def __init__(self, lmbda, size=1, color=colors['USF_Green']):
         """
         Parameters:
         - lmbda (float): Average rate of the Poisson distribution.
@@ -286,8 +284,7 @@ class PoissonSimulation:
         """
         Simulate Poisson data based on the provided parameters.
         """
-        simulated_data = np.random.poisson(self.lmbda, self.size)
-        self.simulated_data = simulated_data
+        self.simulated_data = np.random.poisson(self.lmbda, self.size)
 
     def plot_simulation(self):
         """
@@ -327,4 +324,124 @@ class PoissonSimulation:
             xaxis=dict(tickmode='array', tickvals=x_vals, tickangle=0))
 
         # Show plot 
+        st.plotly_chart(fig)
+
+
+## Normal Distribution
+
+class NormalDistribution:
+    def __init__(self, mean, std_dev, size=1, colors=colors):
+        """
+        Parameters:
+        - mean (float): Mean of the normal distribution.
+        - std_dev (float): Standard deviation of the normal distribution.
+        - size (int): Number of simulations to run (default is 1).
+        """
+        self.mean = mean
+        self.std_dev = std_dev
+        self.size = size
+        self.colors = colors
+
+        self.simulated_data = None
+        self.simulate_normal_dist_data()
+
+        self.x_axis_min = None
+        self.x_axis_max = None
+        self.x_vals = None
+        self.generate_x_axis()
+
+        self.pdf_vals = None
+        self.calculate_pdf()
+
+        self.cdf_vals = None
+        self.calculate_cdf()
+
+    def simulate_normal_dist_data(self):
+        """
+        Simulate normal distribution data based on the provided parameters.
+        """
+        simulated_data = np.random.normal(self.mean, self.std_dev, self.size)
+        self.simulated_data = simulated_data
+
+    def generate_x_axis(self):
+        simulation_trace=go.Histogram(
+            x=self.simulated_data, 
+            histnorm='probability density', 
+            marker_color=self.colors['USF_Green'], 
+            showlegend=False)
+        
+        x_axis_limits = [np.min(simulation_trace.x), np.max(simulation_trace.x)]
+        self.x_axis_min = x_axis_limits[0]
+        self.x_axis_max = x_axis_limits[1]
+        self.x_vals = np.linspace(self.x_axis_min, self.x_axis_max, 1000)
+
+    def calculate_pdf(self):
+        """
+        Calculate the probability density function (PDF) for the normal distribution.
+        """
+        self.pdf_vals = (1 / (self.std_dev * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((self.x_vals - self.mean) / self.std_dev) ** 2)
+
+    def calculate_cdf(self):
+        """
+        Calculate the cumulative distribution function (CDF) for the normal distribution.
+        """
+        self.cdf_vals = 0.5 * (1 + np.array([math.erf((val - self.mean) / (self.std_dev * np.sqrt(2))) for val in self.x_vals]))
+
+    def plot_simulation_pdf_cdf(self):
+        # Trace of histogram for simulated data
+        simulation_trace=go.Histogram(
+            x=self.simulated_data, 
+            histnorm='probability density', 
+            marker_color=self.colors['USF_Green'], 
+            showlegend=False)
+
+        # Trace of line plot for PDF
+        pdf_trace=go.Scatter(
+            x=self.x_vals, y=self.pdf_vals, 
+            mode='lines', name='PDF', 
+            line=dict(color=self.colors['USF_Yellow'], width=3), showlegend=False)
+
+        # Trace of line plot for CDF
+        cdf_trace=go.Scatter(
+                x=self.x_vals, y=self.cdf_vals, 
+                mode='lines', name='CDF', 
+                line=dict(color=self.colors['USF_Gray'], width=3), 
+                showlegend=False)
+
+        # Set initial visibility
+        simulation_trace.visible = True
+        pdf_trace.visible = True
+        cdf_trace.visible = False
+
+        # Create layout with updatemenus
+        layout = go.Layout(
+            title='Normal Distribution Simulation with PDF',
+            updatemenus=[{
+                'buttons': [{
+                    'args': [{'visible': [True, False, False]}, {'title': 'Normal Distribution Simulation'}],
+                    'label': 'Simulated Data Only',
+                    'method': 'update'
+                    }, {
+                    'args': [{'visible': [True, True, False]}, {'title': 'Normal Distribution Simulation with PDF'}],
+                    'label': 'Overlay PDF',
+                    'method': 'update'
+                    }, {
+                        'args': [{'visible': [True, False, True]}, {'title': 'Normal Distribution Simulation with CDF'}],
+                        'label': 'Overlay CDF',
+                        'method': 'update'
+                    }, {
+                        'args': [{'visible': [True, True, True]}, {'title': 'Normal Distribution Simulation with PDF & CDF'}],
+                        'label': 'Overlay Both',
+                        'method': 'update'
+                    }],
+                'type': 'buttons',
+                'direction': 'down',
+                'showactive': False,
+                'x': -0.35,
+                'xanchor': 'left', 'yanchor': 'top'}])
+        
+        # Create figure
+        fig = go.Figure(data=[simulation_trace, pdf_trace, cdf_trace], layout=layout)
+        
+        # Show plot
         st.plotly_chart(fig)
