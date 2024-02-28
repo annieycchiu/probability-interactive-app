@@ -1,6 +1,4 @@
 import streamlit as st
-import numpy as np
-import scipy.stats as stats
 
 from utils.stats_viz import NormalDistribution
 from utils.other_utils import add_logo, setup_sticky_header, add_title, add_exp_var
