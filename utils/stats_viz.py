@@ -392,21 +392,26 @@ class NormalDistribution:
         simulation_trace=go.Histogram(
             x=self.simulated_data, 
             histnorm='probability density', 
+            name='Simulation',
             marker_color=self.colors['USF_Green'], 
-            showlegend=False)
+            showlegend=False,
+            hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for PDF
         pdf_trace=go.Scatter(
             x=self.x_vals, y=self.pdf_vals, 
             mode='lines', name='PDF', 
-            line=dict(color=self.colors['USF_Yellow'], width=3), showlegend=False)
+            line=dict(color=self.colors['USF_Yellow'], width=3), 
+            showlegend=False,
+            hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for CDF
         cdf_trace=go.Scatter(
                 x=self.x_vals, y=self.cdf_vals, 
                 mode='lines', name='CDF', 
                 line=dict(color=self.colors['USF_Gray'], width=3), 
-                showlegend=False)
+                showlegend=False,
+                hovertemplate='<b>x</b>: %{x}<br><b>F(x)</b>: %{y}')
 
         # Set initial visibility
         simulation_trace.visible = True
@@ -517,20 +522,26 @@ class UniformDistribution:
         simulation_trace=go.Histogram(
             x=self.simulated_data, 
             histnorm='probability density', 
+            name='Simulation',
             marker_color=self.colors['USF_Green'], 
-            showlegend=False)
+            showlegend=False,
+            hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
         
         # Trace of line plot for PDF
         pdf_trace=go.Scatter(
             x=self.x_vals, y=self.pdf_vals, 
             mode='lines', name='PDF', 
-            line=dict(color=self.colors['USF_Yellow'], width=3), showlegend=False)
+            line=dict(color=self.colors['USF_Yellow'], width=3), 
+            showlegend=False,
+            hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
         
         # Trace of line plot for CDF
         cdf_trace=go.Scatter(
             x=self.x_vals, y=self.cdf_vals, 
             mode='lines', name='CDF', 
-            line=dict(color=self.colors['USF_Gray'], width=3), showlegend=False)
+            line=dict(color=self.colors['USF_Gray'], width=3), 
+            showlegend=False,
+            hovertemplate='<b>x</b>: %{x}<br><b>F(x)</b>: %{y}')
 
         # Set initial visibility
         simulation_trace.visible = True
