@@ -445,3 +445,128 @@ class NormalDistribution:
         
         # Show plot
         st.plotly_chart(fig)
+
+
+## Uniform Distribution
+
+class UniformDistribution:
+    def __init__(self, lower, upper, size=1, colors=colors):
+        """
+        Parameters:
+        - lower (float): Lower bound of the uniform distribution.
+        - upper (float): Upper bound of the uniform distribution.
+        - size (int): Number of simulations to run (default is 1).
+        """
+        self.lower = lower
+        self.upper = upper
+        self.size = size
+        self.colors = colors
+
+        self.simulated_data = None
+        self.simulate_uniform_dist_data()
+
+        self.x_axis_min = None
+        self.x_axis_max = None
+        self.x_vals = None
+        self.generate_x_axis()
+
+        self.pdf_vals = None 
+        self.generate_pdf_vals()
+
+        self.cdf_vals = None
+        self.generate_cdf_vals()
+
+    def simulate_uniform_dist_data(self):
+        """
+        Simulate uniform distribution data based on the provided parameters.
+        """
+        simulated_data = np.random.uniform(self.lower, self.upper, self.size)
+        self.simulated_data = simulated_data
+
+    def generate_x_axis(self):
+        self.x_axis_min = self.lower - (self.upper - self.lower)*0.3
+        self.x_axis_max = self.upper + (self.upper - self.lower)*0.3
+        self.x_vals = np.linspace(self.x_axis_min, self.x_axis_max, 1000)
+
+    def generate_pdf_vals(self):
+        # Initialize y_vals with zeros
+        y_vals = np.zeros_like(self.x_vals)
+
+        # Set y_vals to 1/(upper-lower) where x_vals is between lower and upper
+        mask = np.logical_and(self.x_vals >= self.lower, self.x_vals <= self.upper)
+        y_vals[mask] = 1 / (self.upper - self.lower)
+
+        self.pdf_vals = y_vals
+
+    def generate_cdf_vals(self):
+        # Initialize y_vals with zeros
+        y_vals = np.zeros_like(self.x_vals)
+
+        # Set y_vals to 1 where x_vals is larger than upper
+        mask1 = self.x_vals > self.upper
+        y_vals[mask1] = 1
+
+        # Set y_vals to be linearly spaced out between 0 and 1 where x_vals is between lower and upper
+        mask2 = np.logical_and(self.x_vals >= self.lower, self.x_vals <= self.upper)
+        y_vals[mask2] = np.interp(self.x_vals[mask2], [self.lower, self.upper], [0, 1])
+
+        self.cdf_vals = y_vals
+
+    def plot_simulation_pdf_cdf(self):
+        # Trace of histogram for simulated data
+        simulation_trace=go.Histogram(
+            x=self.simulated_data, 
+            histnorm='probability density', 
+            marker_color=self.colors['USF_Green'], 
+            showlegend=False)
+        
+        # Trace of line plot for PDF
+        pdf_trace=go.Scatter(
+            x=self.x_vals, y=self.pdf_vals, 
+            mode='lines', name='PDF', 
+            line=dict(color=self.colors['USF_Yellow'], width=3), showlegend=False)
+        
+        # Trace of line plot for CDF
+        cdf_trace=go.Scatter(
+            x=self.x_vals, y=self.cdf_vals, 
+            mode='lines', name='CDF', 
+            line=dict(color=self.colors['USF_Gray'], width=3), showlegend=False)
+
+        # Set initial visibility
+        simulation_trace.visible = True
+        pdf_trace.visible = True
+        cdf_trace.visible = False
+
+        # Create layout with updatemenus
+        layout = go.Layout(
+            title='Uniform Distribution Simulation with PDF',
+            xaxis=dict(range=[self.x_axis_min, self.x_axis_max]),
+            updatemenus=[{
+                'buttons': [{
+                    'args': [{'visible': [True, False, False]}, {'title': 'Uniform Distribution Simulation'}],
+                    'label': 'Simulated Data Only',
+                    'method': 'update'
+                    }, {
+                    'args': [{'visible': [True, True, False]}, {'title': 'Uniform Distribution Simulation with PDF'}],
+                    'label': 'Overlay PDF',
+                    'method': 'update'
+                    }, {
+                        'args': [{'visible': [True, False, True]}, {'title': 'Uniform Distribution Simulation with CDF'}],
+                        'label': 'Overlay CDF',
+                        'method': 'update'
+                    }, {
+                        'args': [{'visible': [True, True, True]}, {'title': 'Uniform Distribution Simulation with PDF & CDF'}],
+                        'label': 'Overlay Both',
+                        'method': 'update'
+                    }],
+                'type': 'buttons',
+                'direction': 'down',
+                'showactive': False,
+                'x': -0.35,
+                'xanchor': 'left', 'yanchor': 'top'}])
+        
+        # Create figure
+        fig = go.Figure(data=[simulation_trace, pdf_trace, cdf_trace], layout=layout)
+        
+        # Show plot
+        st.plotly_chart(fig)
