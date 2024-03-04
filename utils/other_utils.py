@@ -1,5 +1,39 @@
 import streamlit as st
 
+def display_formulas(dist, pmf, cdf, exp, var, type=['Discrete', 'Continuous']):
+    st.write(
+    "<span style='font-size:22px; font-weight:bold;'>", dist, "</span>",
+    unsafe_allow_html=True)
+
+    st.write('')
+
+    if type == 'Discrete':
+        st.write(
+            "<span style='font-size:18px; font-weight:bold;'>PMF</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left: 60px;'>", pmf, "</span>", 
+            unsafe_allow_html=True)
+    elif type == 'Continuous':
+        st.write(
+            "<span style='font-size:18px; font-weight:bold;'>PDF</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left: 60px;'>", pmf, "</span>", 
+            unsafe_allow_html=True)
+
+
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>CDF</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 60px;'>", cdf, "</span>", 
+        unsafe_allow_html=True)
+
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>Mean</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 50px;'>", exp, "</span>", 
+        unsafe_allow_html=True)
+
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>Variance</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 25px;'>", var, "</span>", 
+        unsafe_allow_html=True)
+
 def add_logo():
     st.markdown(
         f"""
