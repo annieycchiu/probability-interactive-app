@@ -855,17 +855,18 @@ class GammaDistribution:
         simulation_trace = go.Histogram(
             x=self.simulated_data,
             histnorm='probability density',
-            name='Simulation',
+            name='Empirical PDF',
             marker_color=self.colors['USF_Green'],
-            showlegend=False,
+            # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for PDF
         pdf_trace = go.Scatter(
             x=self.x_vals, y=self.pdf_vals,
-            mode='lines', name='PDF',
+            mode='lines', 
+            name='Theoretical PDF',
             line=dict(color=self.colors['USF_Yellow'], width=3),
-            showlegend=False,
+            # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Set initial visibility
@@ -889,7 +890,11 @@ class GammaDistribution:
                 'direction': 'down',
                 'showactive': False,
                 'x': -0.35,
-                'xanchor': 'left', 'yanchor': 'top'}])
+                'xanchor': 'left', 'yanchor': 'top'}],
+            legend=dict(
+                orientation="h", # horizontal legend
+                yanchor="bottom", y=1.02,
+                xanchor="right", x=1))
 
         # Create figure
         fig = go.Figure(data=[simulation_trace, pdf_trace], layout=layout)
