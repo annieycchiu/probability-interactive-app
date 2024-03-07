@@ -24,14 +24,17 @@ def main():
         add_title(title, notation)
 
         # Get user defined parameters
-        col1, col2, _, col3, col4 = st.columns([0.1, 0.25, 0.1, 0.1, 0.25])
+        col1, col2, _, col3, col4 = st.columns([0.1, 0.40, 0.05, 0.1, 0.20])
         with col1:
             st.write(
             "<span style='font-size:18px; font-weight:bold;'>Parameters:</span>", 
             unsafe_allow_html=True)
         with col2:
-            shape = st.slider('Shape (α)', min_value=0.1, max_value=10.0, value=2.0, step=0.01)
-            scale = st.slider('Inverse Scale/ Rate (β)', min_value=0.1, max_value=10.0, value=2.0, step=0.01)
+            sub_col1, sub_col2 = st.columns(2)
+            with sub_col1:
+                shape = st.slider('Shape (α)', min_value=0.1, max_value=10.0, value=2.0, step=0.01)
+            with sub_col2:
+                scale = st.slider('Inverse Scale/ Rate (β)', min_value=0.1, max_value=10.0, value=2.0, step=0.01)
         with col3:
             st.write(
             "<span style='font-size:18px; font-weight:bold;'>Simulation:</span>", 
