@@ -1,38 +1,87 @@
 import streamlit as st
 
-def display_formulas(dist, pmf, cdf, exp, var, type=['Discrete', 'Continuous']):
+def display_homepage_formulas(
+        dist, notation, pmf_pdf, cdf, exp, var, type=['Discrete', 'Continuous']):
     st.write(
     "<span style='font-size:22px; font-weight:bold;'>", dist, "</span>",
     unsafe_allow_html=True)
 
     st.write('')
 
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>Notation</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 53px;'>", notation, "</span>", 
+        unsafe_allow_html=True)
+    
     if type == 'Discrete':
         st.write(
             "<span style='font-size:18px; font-weight:bold;'>PMF</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 60px;'>", pmf, "</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left: 85px;'>", pmf_pdf, "</span>", 
             unsafe_allow_html=True)
     elif type == 'Continuous':
         st.write(
             "<span style='font-size:18px; font-weight:bold;'>PDF</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 60px;'>", pmf, "</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left: 85px;'>", pmf_pdf, "</span>", 
             unsafe_allow_html=True)
 
 
     st.write(
         "<span style='font-size:18px; font-weight:bold;'>CDF</span>", 
-        f"<span style='font-size:16px; font-weight:bold; margin-left: 60px;'>", cdf, "</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 85px;'>", cdf, "</span>", 
         unsafe_allow_html=True)
 
     st.write(
-        "<span style='font-size:18px; font-weight:bold;'>Mean</span>", 
-        f"<span style='font-size:16px; font-weight:bold; margin-left: 50px;'>", exp, "</span>", 
+        "<span style='font-size:18px; font-weight:bold;'>Expectation</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 20px;'>", exp, "</span>", 
         unsafe_allow_html=True)
 
     st.write(
         "<span style='font-size:18px; font-weight:bold;'>Variance</span>", 
-        f"<span style='font-size:16px; font-weight:bold; margin-left: 25px;'>", var, "</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 45px;'>", var, "</span>", 
         unsafe_allow_html=True)
+    
+
+def display_content_page_formulas(
+        pmf_pdf, cdf, exp, var, type=['Discrete', 'Continuous']):
+    st.write('')
+    if type == 'Discrete':
+        st.write(
+            "<span style='font-size:18px; font-weight:bold;'>Probability Mass Function (PMF)</span>",
+            "<br>", "<br>",
+            f"<span style='font-size:16px; font-weight:bold;'>", pmf_pdf, "</span>", 
+            unsafe_allow_html=True)
+        st.write('')
+        st.write('')
+
+    elif type == 'Continuous':
+        st.write(
+            "<span style='font-size:18px; font-weight:bold;'>Probability Density Function (PDF)</span>",
+            "<br>", "<br>",
+            f"<span style='font-size:16px; font-weight:bold;'>", pmf_pdf, "</span>", 
+            unsafe_allow_html=True)
+        st.write('')
+        st.write('')
+
+
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>Cumulative Distribution Function (CDF)</span>",
+        "<br>", "<br>",
+        f"<span style='font-size:16px; font-weight:bold;'>", cdf, "</span>", 
+        unsafe_allow_html=True)
+    st.write('')
+    st.write('')
+
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>Expectation</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 20px;'>", exp, "</span>", 
+        unsafe_allow_html=True)
+    st.write('')
+
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>Variance</span>", 
+        f"<span style='font-size:16px; font-weight:bold; margin-left: 45px;'>", var, "</span>", 
+        unsafe_allow_html=True)
+    
 
 def add_logo():
     st.markdown(
@@ -105,6 +154,24 @@ def add_exp_var(expectation_formula, variance_formula):
                 unsafe_allow_html=True)
         
     st.write('')
+
+
+def add_customized_expander():
+    st.markdown(
+        '''
+        <style>
+        .streamlit-expanderHeader {
+            background-color: rgba(240, 242, 246);
+            color: black;
+        }
+        .streamlit-expanderContent {
+            background-color: rgba(240, 242, 246);
+            color: black; 
+        }
+        </style>
+        ''',
+        unsafe_allow_html=True
+    )
 
 
     
