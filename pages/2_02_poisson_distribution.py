@@ -1,7 +1,8 @@
 import streamlit as st
 
-from utils.stats_viz import PoissonPMF, PoissonSimulation
-from utils.other_utils import add_logo, setup_sticky_header, add_title, add_exp_var
+from utils.stats_viz import PoissonDistribution
+from utils.other_utils import add_logo, setup_sticky_header, add_title, display_content_page_formulas, add_customized_expander
+from utils.formulas import poisson_notation, poisson_pmf, poisson_cdf, poisson_exp, poisson_var
 
 
 def main():
@@ -13,61 +14,64 @@ def main():
         initial_sidebar_state='collapsed'
     )
 
+    # Add USF logo at sidebar
+    add_logo()
+
     # Define sticky header
     header = st.container()
     with header:
         title = 'Poisson Distribution'
-        notation = r'$X \sim \mathrm{Poi}(\lambda)$'
-        expectation_formula = r'$E[X] = \lambda$'
-        variance_formula = r'$Var(X) = \lambda$'
+        add_title(title, poisson_notation)
 
-        add_title(title, notation)
-        add_exp_var(expectation_formula, variance_formula)
-
-        # Get user defined parameter
-        _, col1, _ = st.columns([0.1, 0.35, 0.55])
+        # Get user defined parameters
+        col1, col2, _, col3, col4 = st.columns([0.1, 0.25, 0.1, 0.1, 0.25])
         with col1:
+            st.write(
+            "<span style='font-size:18px; font-weight:bold;'>Parameters:</span>", 
+            unsafe_allow_html=True)
+        with col2:
             lmbda = st.slider('Constant average rate (λ)', min_value=0, max_value=20, value=5, step=1)
+        with col3:
+            st.write(
+            "<span style='font-size:18px; font-weight:bold;'>Simulation:</span>", 
+            unsafe_allow_html=True)
+        with col4:
+            size = st.slider('Number of simulations', min_value=1, max_value=10000, value=5000)
 
         st.write("<div class='fixed-header'/>", unsafe_allow_html=True)
 
     setup_sticky_header(header)
 
-    # Add USF logo at sidebar
-    add_logo()
+    # Add customized expander to display functions and formulas
+    add_customized_expander()
+    with st.expander(":pushpin: Poisson Distribution - PMF, CDF, Expectation, Variance"):
+        display_content_page_formulas(
+            poisson_pmf, poisson_cdf, poisson_exp, poisson_var, type='Discrete'
+        )
 
-    # Split main app section into two columns. One for plotting PMF and the other one for plotting simulated results
+    st.write('')
+
+    # Split main app section into two columns. 
+    # One for plotting PMF and the other one for plotting simulated results
+    poissonDist = PoissonDistribution(lmbda, size)
+
     col11, _, col12 = st.columns([0.45, 0.1, 0.45])
     with col11:
-        st.write('**Probability Mass Function**')
-        st.latex(r'P(X=x) = \frac{{\lambda^x e^{{-\lambda}}}}{{x!}}')
+        # Plot PMF
+        poissonDist.plot_theoretical_pmf()
 
     with col12:
-        st.write('**Simulations**')
-        _, col, _ = st.columns([0.05, 0.35, 0.05])
-        with col:
-            size = st.slider('Number of simulations', min_value=1, max_value=10000, value=5000)
+        # Plot the simulation
+        poissonDist.plot_empirial_pmf()
 
-    # Calculate PMF
-    poissonPmf = PoissonPMF(lmbda)
-
-    # Run the simulation
-    poissonSim = PoissonSimulation(lmbda, size)
-
-    col21, _, _ = st.columns([0.45, 0.1, 0.45])
+    col21, _ = st.columns([0.50, 0.50])
     with col21:
         # Display probability table
-        st.write('**Probability Table**')
-        poissonPmf.plot_prob_table()
-
-    col31, _, col32 = st.columns([0.45, 0.1, 0.45])
-    with col31:
-        # Plot PMF
-        poissonPmf.plot_pmf()
-
-    with col32:
-        # Plot the simulation
-        poissonSim.plot_simulation()
+        st.write(
+            "<span style='font-size:18px; font-weight:bold;'>Probability Table</span>", 
+            unsafe_allow_html=True)
+        
+        poissonDist.plot_prob_table()
 
 if __name__ == '__main__':
     main()

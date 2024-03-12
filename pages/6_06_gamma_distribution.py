@@ -1,7 +1,8 @@
 import streamlit as st
 
 from utils.stats_viz import GammaDistribution
-from utils.other_utils import add_logo, setup_sticky_header, add_title
+from utils.other_utils import add_logo, setup_sticky_header, add_title, display_content_page_formulas, add_customized_expander
+from utils.formulas import gamma_notation, gamma_pdf, gamma_cdf, gamma_exp, gamma_var
 
 def main():
     # Set up the layout of Streamlit app
@@ -19,9 +20,7 @@ def main():
     header = st.container()
     with header:
         title = 'Gamma Distribution'
-        notation = r'$X \sim \Gamma (\alpha, \beta) \equiv \operatorname{Gamma}(\alpha, \beta)$'
-
-        add_title(title, notation)
+        add_title(title, gamma_notation)
 
         # Get user defined parameters
         col1, col2, _, col3, col4 = st.columns([0.1, 0.40, 0.05, 0.1, 0.20])
@@ -47,52 +46,39 @@ def main():
     # Set up sticky header
     setup_sticky_header(header)
 
+    # Add customized expander to display functions and formulas
+    add_customized_expander()
+    with st.expander(":pushpin: Exponential Distribution - PDF, CDF, Expectation, Variance"):
+        display_content_page_formulas(
+            gamma_pdf, gamma_cdf, gamma_exp, gamma_var, type='Continuous'
+        )
+
+    st.write('')
+
     # Split main app section into two columns. 
-    # One for displaying formulas and the other one for plotting.
-    col11, _, col12 = st.columns([0.25, 0.1, 0.75])
+    # One for plotting PDF and the other one for plotting CDF
+    gammaDist = GammaDistribution(shape, scale, size)
+
+    col11, _, col12 = st.columns([0.45, 0.1, 0.45])
     with col11:
-        # Display PDF function
-        pdf_func = r'f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\beta x} \quad \text{ for } x \ge 0 \quad \alpha, \beta \ge 0'
-
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Probability Density Function (PDF)</span>",
-            unsafe_allow_html=True)
-        st.latex(pdf_func)
-        st.write('')
-
-        # Display CDF function
-        cdf_func = r'F(x) = \frac{1}{\Gamma(\alpha)} \gamma(\alpha, \beta x)'
-
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Cumulative Distribution Function (CDF)</span>",
-            unsafe_allow_html=True)
-        st.latex(cdf_func)
-        st.write('')
-        st.write('')
-
-        # Display expectation formula
-        expectation_formula = r'$E[X] = \frac{\alpha}{\beta}$'
-        
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Expectation:</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 10px;'>", expectation_formula, "</span>", 
-            unsafe_allow_html=True)
-        st.write('')
-
-        # Display variance formula
-        variance_formula = r'$Var(X) = \frac{\alpha}{\beta^2}$'
-
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Variance:</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 37px;'>", variance_formula, "</span>", 
-            unsafe_allow_html=True)
-        st.write('')
-        st.write('')  
+        gammaDist.plot_pdfs()
 
     with col12:
-        gammaDist = GammaDistribution(shape, scale, size)
-        gammaDist.plot_pdfs()
         gammaDist.plot_cdfs()
+
+    # The following block of code is outdated. Keeping it for reference purposes. (old layout)
+    # # Split main app section into two columns. 
+    # # One for displaying formulas and the other one for plotting.
+    # col11, _, col12 = st.columns([0.35, 0.05, 0.60])
+    # with col11:
+    #     display_content_page_formulas(
+    #         gamma_pdf, gamma_cdf, gamma_exp, gamma_var, type='Continuous'
+    #     ) 
+
+    # with col12:
+    #     gammaDist = GammaDistribution(shape, scale, size)
+    #     gammaDist.plot_pdfs()
+    #     gammaDist.plot_cdfs()
 
 if __name__ == '__main__':
     main()

@@ -1,7 +1,8 @@
 import streamlit as st
 
 from utils.stats_viz import ExponentialDistribution
-from utils.other_utils import add_logo, setup_sticky_header, add_title
+from utils.other_utils import add_logo, setup_sticky_header, add_title, display_content_page_formulas, add_customized_expander
+from utils.formulas import exponential_notation, exponential_pdf, exponential_cdf, exponential_exp, exponential_var
 
 
 def main():
@@ -20,9 +21,7 @@ def main():
     header = st.container()
     with header:
         title = 'Exponential Distribution'
-        notation = r'$X \sim Exp(\lambda)$'
-
-        add_title(title, notation)
+        add_title(title, exponential_notation)
 
         # Get user defined parameters
         col1, col2, _, col3, col4 = st.columns([0.1, 0.25, 0.1, 0.1, 0.25])
@@ -44,52 +43,39 @@ def main():
     # Set up sticky header
     setup_sticky_header(header)
 
+    # Add customized expander to display functions and formulas
+    add_customized_expander()
+    with st.expander(":pushpin: Exponential Distribution - PDF, CDF, Expectation, Variance"):
+        display_content_page_formulas(
+            exponential_pdf, exponential_cdf, exponential_exp, exponential_var, type='Continuous'
+        )
+
+    st.write('')
+
     # Split main app section into two columns. 
-    # One for displaying formulas and the other one for plotting.
-    col11, _, col12 = st.columns([0.25, 0.1, 0.75])
+    # One for plotting PDF and the other one for plotting CDF
+    exponentialDist = ExponentialDistribution(rate, size)
+
+    col11, _, col12 = st.columns([0.45, 0.1, 0.45])
     with col11:
-        # Display PDF function
-        pdf_func = r'f(x) = \lambda e^{-\lambda x}'
-
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Probability Density Function (PDF)</span>",
-            unsafe_allow_html=True)
-        st.latex(pdf_func)
-        st.write('')
-
-        # Display CDF function
-        cdf_func = r'F(x) = 1 - e^{-\lambda x}'
-
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Cumulative Distribution Function (CDF)</span>",
-            unsafe_allow_html=True)
-        st.latex(cdf_func)
-        st.write('')
-        st.write('')  
-
-        # Display expectation formula
-        expectation_formula = r'$E[X] = \frac{1}{\lambda}$'
-        
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Expectation:</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 10px;'>", expectation_formula, "</span>", 
-            unsafe_allow_html=True)
-        st.write('')
-
-        # Display variance formula
-        variance_formula = r'$Var(X) = \frac{1}{\lambda^2}$'
-
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Variance:</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 37px;'>", variance_formula, "</span>", 
-            unsafe_allow_html=True)
-        st.write('')
-        st.write('')
+        exponentialDist.plot_pdfs()
 
     with col12:
-        exponentialDist = ExponentialDistribution(rate, size)
-        exponentialDist.plot_pdfs()
         exponentialDist.plot_cdfs()
+
+    # The following block of code is outdated. Keeping it for reference purposes. (old layout)
+    # # Split main app section into two columns. 
+    # # One for displaying formulas and the other one for plotting.
+    # col11, _, col12 = st.columns([0.35, 0.05, 0.60])
+    # with col11:
+    #     display_content_page_formulas(
+    #         exponential_pdf, exponential_cdf, exponential_exp, exponential_var, type='Continuous'
+    #     ) 
+
+    # with col12:
+    #     exponentialDist = ExponentialDistribution(rate, size)
+    #     exponentialDist.plot_pdfs()
+    #     exponentialDist.plot_cdfs()
 
 if __name__ == '__main__':
     main()
