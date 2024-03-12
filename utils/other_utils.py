@@ -158,8 +158,8 @@ def add_exp_var(expectation_formula, variance_formula):
 
 def add_customized_expander():
     st.markdown(
-        '''
-        <style>
+        """
+    <style>
         .streamlit-expanderHeader {
             background-color: rgba(240, 242, 246);
             color: black;
@@ -168,8 +168,8 @@ def add_customized_expander():
             background-color: rgba(240, 242, 246);
             color: black; 
         }
-        </style>
-        ''',
+    </style>
+        """,
         unsafe_allow_html=True
     )
 
