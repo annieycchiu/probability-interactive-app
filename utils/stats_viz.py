@@ -77,7 +77,7 @@ class BinomialDistribution:
             tickmode = 'auto'
 
         fig.update_layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Binomial Distribution Theoretical PDF</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Binomial Distribution Theoretical PMF</span>",
             xaxis_title='Number of Successes',
             yaxis_title='Probability',
             hoverlabel=dict(font=dict(size=14), bgcolor=self.colors['USF_Green']),
@@ -141,7 +141,7 @@ class BinomialDistribution:
 
         fig.update_layout(
             go.Layout(
-                title="<span style='font-size:18px; font-weight:bold;'>Binomial Distribution Empirial PDF (Simulation)</span>",
+                title="<span style='font-size:18px; font-weight:bold;'>Binomial Distribution Empirial PMF (Simulation)</span>",
                 xaxis_title='Number of Successes',
                 yaxis_title='Frequency (Count)',
                 hoverlabel=dict(font=dict(size=14), bgcolor=self.colors['USF_Yellow']),
@@ -374,7 +374,7 @@ class PoissonDistribution:
 
         # Set layout
         fig.update_layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Poisson Distribution Theoretical PDF</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Poisson Distribution Theoretical PMF</span>",
             xaxis_title='Number of Events',
             yaxis_title='Probability',
             hoverlabel=dict(font=dict(size=14), bgcolor=self.colors['USF_Green']),
@@ -431,7 +431,7 @@ class PoissonDistribution:
 
         # Set layout
         fig.update_layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Poisson Distribution Empirial PDF (Simulation)</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Poisson Distribution Empirial PMF (Simulation)</span>",
             xaxis_title='Number of Events',
             yaxis_title='Frequency (Count)',
             hoverlabel=dict(font=dict(size=14), bgcolor=self.colors['USF_Yellow']),
@@ -739,7 +739,7 @@ class NormalDistribution:
 
         # Create layout with updatemenus
         layout = go.Layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Exponential Distribution Simulation (PDF)</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Normal Distribution Simulation (PDF)</span>",
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
@@ -774,7 +774,7 @@ class NormalDistribution:
 
         # Create layout with updatemenus
         layout = go.Layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Exponential Distribution Simulation (CDF)</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Normal Distribution Simulation (CDF)</span>",
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
@@ -942,7 +942,7 @@ class UniformDistribution:
 
         # Create layout with updatemenus
         layout = go.Layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Exponential Distribution Simulation (PDF)</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Uniform Distribution Simulation (PDF)</span>",
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
@@ -977,7 +977,7 @@ class UniformDistribution:
 
         # Create layout with updatemenus
         layout = go.Layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Exponential Distribution Simulation (CDF)</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Uniform Distribution Simulation (CDF)</span>",
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
