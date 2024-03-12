@@ -47,7 +47,7 @@ def main():
 
     # Add customized expander to display functions and formulas
     add_customized_expander()
-    with st.expander(":pushpin: Normal Distribution - PDF, CDF, Expectation, Variance"):
+    with st.expander("**:pushpin: Normal Distribution - PDF, CDF, Expectation, Variance**"):
         display_content_page_formulas(
             normal_pdf, normal_cdf, normal_exp, normal_var, type='Continuous'
         )

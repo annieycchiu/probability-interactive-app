@@ -48,7 +48,7 @@ def main():
 
     # Add customized expander to display functions and formulas
     add_customized_expander()
-    with st.expander(":pushpin: Gamma Distribution - PDF, CDF, Expectation, Variance"):
+    with st.expander("**:pushpin: Gamma Distribution - PDF, CDF, Expectation, Variance**"):
         display_content_page_formulas(
             gamma_pdf, gamma_cdf, gamma_exp, gamma_var, type='Continuous'
         )

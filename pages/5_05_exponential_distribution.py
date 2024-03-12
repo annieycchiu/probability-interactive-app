@@ -45,7 +45,7 @@ def main():
 
     # Add customized expander to display functions and formulas
     add_customized_expander()
-    with st.expander(":pushpin: Exponential Distribution - PDF, CDF, Expectation, Variance"):
+    with st.expander("**:pushpin: Exponential Distribution - PDF, CDF, Expectation, Variance**"):
         display_content_page_formulas(
             exponential_pdf, exponential_cdf, exponential_exp, exponential_var, type='Continuous'
         )

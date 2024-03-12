@@ -45,7 +45,7 @@ def main():
 
     # Add customized expander to display functions and formulas
     add_customized_expander()
-    with st.expander(":pushpin: Uniform Distribution - PDF, CDF, Expectation, Variance"):
+    with st.expander("**:pushpin: Uniform Distribution - PDF, CDF, Expectation, Variance**"):
         display_content_page_formulas(
             uniform_pdf, uniform_cdf, uniform_exp, uniform_var, type='Continuous'
         )

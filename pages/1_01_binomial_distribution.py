@@ -49,7 +49,7 @@ def main():
 
     # Add customized expander to display functions and formulas
     add_customized_expander()
-    with st.expander(":pushpin: Binomial Distribution - PMF, CDF, Expectation, Variance"):
+    with st.expander("**:pushpin: Binomial Distribution - PMF, CDF, Expectation, Variance**"):
         display_content_page_formulas(
             binomial_pmf, binomial_cdf, binomial_exp, binomial_var, type='Discrete'
         )
