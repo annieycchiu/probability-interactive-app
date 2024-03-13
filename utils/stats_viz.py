@@ -127,7 +127,7 @@ class BinomialDistribution:
         fig.add_trace(
             trace=go.Bar(
                 x=self.x_vals, y=y_vals,
-                marker=dict(color=self.colors['USF_Yellow']),
+                marker=dict(color=self.colors['USF_Yellow'], opacity=0.8),
                 hovertemplate=hover_temp, name='', customdata=customize_data,
                 hoverlabel=dict(font=dict(color='white'))))
 
@@ -425,7 +425,7 @@ class PoissonDistribution:
         fig.add_trace(
             go.Bar(
                 x=self.x_vals, y=y_vals,
-                marker=dict(color=self.colors['USF_Yellow']),
+                marker=dict(color=self.colors['USF_Yellow'], opacity=0.8),
                 hovertemplate=hover_temp, name='', customdata=customize_data,
                 hoverlabel=dict(font=dict(color='white'))))
 
@@ -724,6 +724,7 @@ class NormalDistribution:
             histnorm='probability density',
             name='Empirical PDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for PDF
@@ -759,6 +760,7 @@ class NormalDistribution:
             cumulative_enabled=True,
             name='Empirical CDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for CDF
@@ -927,6 +929,7 @@ class UniformDistribution:
             histnorm='probability density',
             name='Empirical PDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for PDF
@@ -962,6 +965,7 @@ class UniformDistribution:
             cumulative_enabled=True,
             name='Empirical CDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for CDF
@@ -1114,6 +1118,7 @@ class ExponentialDistribution:
             histnorm='probability density',
             name='Empirical PDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
@@ -1167,6 +1172,7 @@ class ExponentialDistribution:
             cumulative_enabled=True,
             name='Empirical CDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
@@ -1273,6 +1279,7 @@ class GammaDistribution:
             histnorm='probability density',
             name='Empirical PDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
@@ -1327,6 +1334,7 @@ class GammaDistribution:
             cumulative_enabled=True,
             name='Empirical CDF',
             marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
