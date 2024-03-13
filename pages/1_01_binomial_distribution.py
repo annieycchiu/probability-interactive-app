@@ -8,7 +8,7 @@ from utils.formulas import binomial_notation, binomial_pmf, binomial_cdf, binomi
 def main():
     # Set up the layout of Streamlit app
     st.set_page_config(
-        page_title='Binomial',
+        page_title='Binomial Distribution',
         page_icon=':bar_chart:',
         layout='wide',
         initial_sidebar_state='collapsed'
