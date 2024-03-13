@@ -127,7 +127,7 @@ def setup_sticky_header(header):
     )
 
 
-def add_title(title, notation):
+def add_title(title, notation=''):
     st.write(
         f"<span style='font-size:35px; font-weight:bold;'>", title, "</span>", 
         f"<span style='font-size:23px; font-weight:bold; margin-left: 20px;'>", notation, "</span>", 
@@ -171,7 +171,4 @@ def add_customized_expander():
     </style>
         """,
         unsafe_allow_html=True
-    )
-
-
-    
+    )   
