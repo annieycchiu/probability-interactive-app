@@ -108,15 +108,18 @@ def main():
     # Load the iris dataset
     df = px.data.iris()
 
-    # Define a dictionary to map colors to species
-    color_map = {'setosa': colors['USF_Green'], 'versicolor': colors['USF_Yellow'], 'virginica': colors['USF_Gray']}
-
     if main_plot == 'scatter':
         if sub_group == None:
             fig = px.scatter(
                 df, x=x, y=y, marginal_x=marginal_x, marginal_y=marginal_y)
             fig.update_traces(marker=dict(color=colors['USF_Green']))
         else:
+            # Define a dictionary to map colors to species
+            color_map = {
+                'setosa': colors['USF_Green'], 
+                'versicolor': colors['USF_Yellow'], 
+                'virginica': colors['USF_Gray']}
+            
             fig = px.scatter(
                 df, x=x, y=y, marginal_x=marginal_x, marginal_y=marginal_y, color=sub_group, 
                 color_discrete_map=color_map)
@@ -133,7 +136,7 @@ def main():
             "<span style='font-size:18px; font-weight:bold;'>Iris Dataset</span>", 
             unsafe_allow_html=True)
         
-        st.write(df.head())
+        st.write(df[['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']])
 
     with col12:
         st.write(
