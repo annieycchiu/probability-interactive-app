@@ -1,6 +1,8 @@
+import math
+import random
 import numpy as np
 import pandas as pd
-import math
+
 import plotly.graph_objs as go
 import streamlit as st
 
@@ -1376,6 +1378,46 @@ class GammaDistribution:
 
         # Create figure
         fig = go.Figure(data=[simulation_trace, cdf_trace], layout=layout)
+
+        # Show plot
+        st.plotly_chart(fig)
+
+
+## Central Limit Therom
+        
+class CentralLimitTheorm():
+    def __init__(self, population_data, sample_size, n_samples, colors=colors):
+        self.population_data = population_data 
+        self.sample_size = sample_size 
+        self.n_samples = n_samples
+        self.colors = colors
+
+        self.sample_means = None
+        self.generate_sample_means()
+
+    def generate_sample_means(self):
+        # Randomly select "sample_size" of observations from the population data for "n_samples" times
+        self.sample_means = [
+            np.mean(random.sample(self.population_data.tolist(), self.sample_size)) for _ in range(self.n_samples)]
+
+    def plot_clt_sample_mean(self):
+        sample_means_trace = go.Histogram(
+            x=self.sample_means,
+            name='Sample Means',
+            marker_color=self.colors['USF_Yellow'],
+            opacity=0.8,
+            showlegend=True)
+        
+        # Create layout with updatemenus
+        layout = go.Layout(
+            title="<span style='font-size:18px; font-weight:bold;'>Sample Means Distribution</span>",
+            legend=dict(
+                orientation="h", # horizontal legend
+                yanchor="bottom", y=1.02,
+                xanchor="right", x=1))
+
+        # Create figure
+        fig = go.Figure(data=[sample_means_trace], layout=layout)
 
         # Show plot
         st.plotly_chart(fig)
