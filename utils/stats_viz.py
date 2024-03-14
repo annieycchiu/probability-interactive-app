@@ -743,6 +743,8 @@ class NormalDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Normal Distribution Simulation (PDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Probability Density',
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
@@ -779,6 +781,8 @@ class NormalDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Normal Distribution Simulation (CDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Cumulative Probability',
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
@@ -948,6 +952,8 @@ class UniformDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Uniform Distribution Simulation (PDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Probability Density',
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
@@ -984,6 +990,8 @@ class UniformDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Uniform Distribution Simulation (CDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Cumulative Probability',
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
@@ -1139,6 +1147,8 @@ class ExponentialDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Exponential Distribution Simulation (PDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Probability Density',
             # # disable updatemenus
             # updatemenus=[{
             #     'buttons': [{
@@ -1193,6 +1203,8 @@ class ExponentialDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Exponential Distribution Simulation (CDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Cumulative Probability',
             # # disable updatemenus
             # updatemenus=[{
             #     'buttons': [{
@@ -1301,6 +1313,8 @@ class GammaDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Gamma Distribution Simulation (PDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Probability Density',
             # # disable updatemenus
             # updatemenus=[{
             #     'buttons': [{
@@ -1355,6 +1369,8 @@ class GammaDistribution:
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Gamma Distribution Simulation (CDF)</span>",
+            xaxis_title='Values that x can take on',
+            yaxis_title='Cumulative Probability',
             # # disable updatemenus
             # updatemenus=[{
             #     'buttons': [{
@@ -1411,6 +1427,8 @@ class CentralLimitTheorm():
         # Create layout with updatemenus
         layout = go.Layout(
             title="<span style='font-size:18px; font-weight:bold;'>Sample Means Distribution</span>",
+            xaxis_title='Sample Mean',
+            yaxis_title='Frequency (Count)',
             legend=dict(
                 orientation="h", # horizontal legend
                 yanchor="bottom", y=1.02,
