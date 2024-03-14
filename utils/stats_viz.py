@@ -86,7 +86,7 @@ class BinomialDistribution:
             xaxis=dict(tickmode=tickmode, tickvals=tickvals, tickangle=0))
         
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def plot_prob_table(self):
         """
@@ -150,7 +150,7 @@ class BinomialDistribution:
                 xaxis=dict(tickmode=tickmode, tickvals=tickvals, tickangle=0)))
             
         # Show plot 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
 # The following block of code is outdated. Keeping it for reference purposes.
 '''
@@ -383,7 +383,7 @@ class PoissonDistribution:
             xaxis=dict(tickmode='array', tickvals=self.x_vals, tickangle=0))
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def plot_prob_table(self):
         """
@@ -440,7 +440,7 @@ class PoissonDistribution:
             xaxis=dict(tickmode='array', tickvals=self.x_vals, tickangle=0))
 
         # Show plot 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
         
 # The following block of code is outdated. Keeping it for reference purposes.
 '''        
@@ -754,7 +754,7 @@ class NormalDistribution:
         fig = go.Figure(data=[simulation_trace, pdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def plot_cdfs(self):
         # Trace of histogram for simulated data
@@ -792,7 +792,7 @@ class NormalDistribution:
         fig = go.Figure(data=[simulation_trace, cdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
 
 ## Uniform Distribution
@@ -963,7 +963,7 @@ class UniformDistribution:
         fig = go.Figure(data=[simulation_trace, pdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def plot_cdfs(self):
         # Trace of histogram for simulated data
@@ -1001,7 +1001,7 @@ class UniformDistribution:
         fig = go.Figure(data=[simulation_trace, cdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
 ## Exponential Distribution
 
@@ -1174,7 +1174,7 @@ class ExponentialDistribution:
         fig = go.Figure(data=[simulation_trace, pdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def plot_cdfs(self):
         # Trace of histogram for simulated data
@@ -1230,7 +1230,7 @@ class ExponentialDistribution:
         fig = go.Figure(data=[simulation_trace, cdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
 
 ## Gamma Distribution
@@ -1340,7 +1340,7 @@ class GammaDistribution:
         fig = go.Figure(data=[simulation_trace, pdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def plot_cdfs(self):
         # Trace of histogram for simulated data
@@ -1396,7 +1396,7 @@ class GammaDistribution:
         fig = go.Figure(data=[simulation_trace, cdf_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
 
 ## Central Limit Therom
@@ -1438,4 +1438,4 @@ class CentralLimitTheorm():
         fig = go.Figure(data=[sample_means_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
