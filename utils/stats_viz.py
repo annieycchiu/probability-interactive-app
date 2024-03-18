@@ -9,6 +9,8 @@ import streamlit as st
 colors = {
     'USF_Green': '#00543C',
     'USF_Yellow': '#FDBB30',
+    'USF_Yellow_rbga_line': 'rgba(253, 187, 48, 0.8)',
+    'USF_Yellow_rbga_fill': 'rgba(253, 187, 48, 0.4)',
     'USF_Gray': '#75787B'
 }
 
@@ -129,7 +131,10 @@ class BinomialDistribution:
         fig.add_trace(
             trace=go.Bar(
                 x=self.x_vals, y=y_vals,
-                marker=dict(color=self.colors['USF_Yellow'], opacity=0.8),
+                # marker=dict(color=self.colors['USF_Yellow'], opacity=0.8),
+                marker=dict(
+                    color=self.colors['USF_Yellow_rbga_fill'],
+                    line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
                 hovertemplate=hover_temp, name='', customdata=customize_data,
                 hoverlabel=dict(font=dict(color='white'))))
 
@@ -427,7 +432,10 @@ class PoissonDistribution:
         fig.add_trace(
             go.Bar(
                 x=self.x_vals, y=y_vals,
-                marker=dict(color=self.colors['USF_Yellow'], opacity=0.8),
+                # marker=dict(color=self.colors['USF_Yellow'], opacity=0.8),
+                marker=dict(
+                    color=self.colors['USF_Yellow_rbga_fill'],
+                    line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
                 hovertemplate=hover_temp, name='', customdata=customize_data,
                 hoverlabel=dict(font=dict(color='white'))))
 
@@ -725,8 +733,11 @@ class NormalDistribution:
             x=self.simulated_data,
             histnorm='probability density',
             name='Empirical PDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for PDF
@@ -763,8 +774,11 @@ class NormalDistribution:
             histnorm='probability density',
             cumulative_enabled=True,
             name='Empirical CDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for CDF
@@ -934,8 +948,11 @@ class UniformDistribution:
             x=self.simulated_data,
             histnorm='probability density',
             name='Empirical PDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for PDF
@@ -972,8 +989,11 @@ class UniformDistribution:
             histnorm='probability density',
             cumulative_enabled=True,
             name='Empirical CDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
         # Trace of line plot for CDF
@@ -1127,8 +1147,11 @@ class ExponentialDistribution:
             x=self.simulated_data,
             histnorm='probability density',
             name='Empirical PDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
@@ -1183,8 +1206,11 @@ class ExponentialDistribution:
             histnorm='probability density',
             cumulative_enabled=True,
             name='Empirical CDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
@@ -1292,8 +1318,11 @@ class GammaDistribution:
             x=self.simulated_data,
             histnorm='probability density',
             name='Empirical PDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
@@ -1349,8 +1378,11 @@ class GammaDistribution:
             histnorm='probability density',
             cumulative_enabled=True,
             name='Empirical CDF',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             # showlegend=False,
             hovertemplate='<b>x</b>: %{x}<br><b>f(x)</b>: %{y}')
 
