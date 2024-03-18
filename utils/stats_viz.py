@@ -1452,8 +1452,11 @@ class CentralLimitTheorm():
         sample_means_trace = go.Histogram(
             x=self.sample_means,
             name='Sample Means',
-            marker_color=self.colors['USF_Yellow'],
-            opacity=0.8,
+            # marker_color=self.colors['USF_Yellow'],
+            # opacity=0.8,
+            marker=dict(
+                color=self.colors['USF_Yellow_rbga_fill'],
+                line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)),
             showlegend=True)
         
         # Create layout with updatemenus
