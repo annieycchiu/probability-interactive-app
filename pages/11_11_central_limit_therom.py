@@ -73,7 +73,7 @@ def main():
                 "<span style='font-size:15px; color: #a61401'> - refers to the number of batches drawn from the population data</span>",
                 unsafe_allow_html=True)
             
-            n_samples = st.slider('Number of Samples', min_value=1, max_value=10000, value=50, step=10,
+            n_samples = st.slider('Number of Samples', min_value=1, max_value=3000, value=50, step=10,
                                   label_visibility='collapsed')
 
         st.write("<div class='fixed-header'/>", unsafe_allow_html=True)
