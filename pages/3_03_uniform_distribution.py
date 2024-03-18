@@ -37,7 +37,7 @@ def main():
             "<span style='font-size:18px; font-weight:bold;'>Simulation:</span>", 
             unsafe_allow_html=True)
         with col4:
-            size = st.slider('Number of simulations', min_value=1, max_value=10000, value=5000)
+            size = st.slider('Number of simulations', min_value=1, max_value=3000, value=500)
 
         st.write("<div class='fixed-header'/>", unsafe_allow_html=True)
 
