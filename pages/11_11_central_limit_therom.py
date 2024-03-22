@@ -61,7 +61,7 @@ def main():
             # User selection: sample size (n) - number of observations per batch
             st.write(
                 "<span style='font-size:18px; font-weight:bold;'>Sample Size (n)</span>", 
-                "<span style='font-size:15px; color: #a61401'> - refers to the number of data per batch</span>",
+                # "<span style='font-size:15px; color: #a61401'> - refers to the number of data per batch</span>",
                 unsafe_allow_html=True)
             
             sample_size = st.slider('Sample Size (n)', min_value=30, max_value=100, value=30, step=10,
@@ -69,8 +69,8 @@ def main():
             
             # User selection: number of samples - number of batches
             st.write(
-                "<span style='font-size:18px; font-weight:bold;'>Number of Samples</span>", 
-                "<span style='font-size:15px; color: #a61401'> - refers to the number of batches drawn from the population data</span>",
+                "<span style='font-size:18px; font-weight:bold;'>Number of Repetitions</span>", 
+                # "<span style='font-size:15px; color: #a61401'> - number of repetitions</span>",
                 unsafe_allow_html=True)
             
             n_samples = st.slider('Number of Samples', min_value=1, max_value=3000, value=50, step=10,
