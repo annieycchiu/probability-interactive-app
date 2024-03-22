@@ -2,6 +2,7 @@ import math
 import random
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 import plotly.graph_objs as go
 import streamlit as st
@@ -1474,3 +1475,52 @@ class CentralLimitTheorm():
 
         # Show plot
         st.plotly_chart(fig, use_container_width=True)
+
+
+class MultimodelDistribution():
+    def __init__(self, dist1_data, dist2_data, colors=colors):
+        self.dist1_data = dist1_data
+        self.dist2_data = dist2_data
+        self.colors = colors
+
+    def plot_distribution(self):
+        # Generate multiple modes dataset
+        data = np.concatenate([self.dist1_data, self.dist2_data])
+
+        # Create a histogram to estimate the density
+        hist, bins = np.histogram(data, bins=100, density=True)
+
+        # Create a histogram trace
+        hist_trace = go.Bar(
+            x=bins, y=hist, 
+            name='Histogram',
+            marker=dict(
+                    color=self.colors['USF_Yellow_rbga_fill'],
+                    line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1)))
+
+        # Calculate kernel density estimate
+        kde = sns.kdeplot(data, bw_adjust=0.5)
+
+        # Create a kernel density estimate trace
+        kde_trace = go.Scatter(
+            x=kde.get_lines()[0].get_data()[0],
+            y=kde.get_lines()[0].get_data()[1],
+            mode='lines',
+            name='Kernel Density Estimate',
+            marker_color=self.colors['USF_Green'])
+
+        # Create layout
+        layout = go.Layout(
+            title="<span style='font-size:18px; font-weight:bold;'>Multimodal Distribution</span>",
+            xaxis=dict(title='Value'),
+            yaxis=dict(title='Density'),
+            legend=dict(
+                # orientation="h", # horizontal legend
+                yanchor="bottom", y=1.02,
+                xanchor="right", x=1))
+
+        # Create figure
+        fig = go.Figure(data=[hist_trace, kde_trace], layout=layout)
+
+        # Show plot
+        st.plotly_chart(fig)
