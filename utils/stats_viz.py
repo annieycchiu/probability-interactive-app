@@ -1443,6 +1443,7 @@ class CentralLimitTheorm():
 
         self.sample_means = None
         self.generate_sample_means()
+        self.mean_of_sample_means = np.mean(self.sample_means)
 
     def generate_sample_means(self):
         # Randomly select "sample_size" of observations from the population data for "n_samples" times
@@ -1472,6 +1473,13 @@ class CentralLimitTheorm():
 
         # Create figure
         fig = go.Figure(data=[sample_means_trace], layout=layout)
+
+        # Add vertical line for the mean of sampling distribution
+        fig.add_vline(
+            x=self.mean_of_sample_means, 
+            line={'color': self.colors['USF_Gray'], 'dash': 'dash', 'width': 2.5},
+            annotation_text=f"Mean: {self.mean_of_sample_means:.3f}", 
+            annotation_position="top")
 
         # Show plot
         st.plotly_chart(fig, use_container_width=True)
