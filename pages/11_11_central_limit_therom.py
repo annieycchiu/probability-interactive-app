@@ -3,7 +3,11 @@ import numpy as np
 
 from utils.stats_viz import UniformDistribution, NormalDistribution, ExponentialDistribution, CentralLimitTheorm
 from utils.other_utils import add_logo, setup_sticky_header, add_title
-
+from utils.formulas import (
+    uniform_notation, uniform_exp, uniform_var,
+    normal_notation, normal_exp, normal_var,
+    exponential_notation, exponential_exp, exponential_var
+    )
 
 def main():
     # Set up the layout of Streamlit app
@@ -84,11 +88,53 @@ def main():
     
     col11, _, col12 = st.columns([0.45, 0.1, 0.45])
     with col11: 
-        # Plot population distribtuion
+        if population_dist == 'uniform':
+            notation = uniform_notation
+            exp_formula = uniform_exp
+            # var_formula = uniform_var
+
+            exp = 1/2*(lower + upper)
+            # var = 1/12*(upper - lower)**2
+
+        elif population_dist == 'normal':
+            notation = normal_notation
+            exp_formula = normal_exp
+            # var_formula = normal_var
+
+            exp = mean
+            # var = std_dev**2
+
+        elif population_dist == 'exponential':
+            notation = exponential_notation  
+            exp_formula = exponential_exp
+            # var_formula = exponential_var
+
+            exp = 1/rate
+            # var = 1/(rate**2)
+
         st.write(
-            "<span style='font-size:20px; font-weight:bold;'>Population Distribution</span>", 
+            "<span style='font-size:18px; font-weight:bold;'>Population Distribution</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left: 20px;'>", notation, "</span>",
             unsafe_allow_html=True)
+        st.write('')
+
+        st.write(
+            "<span style='font-size:18px; font-weight:bold; margin-left:30px;'>Mean</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left:30px;'>", exp_formula, "</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left:10px;'>$=$</span>",
+            f"<span style='font-size:20px; font-weight:bold;'>", round(exp, 3), "</span>",
+            unsafe_allow_html=True)
+        st.write('')
+
+        # st.write(
+        #     "<span style='font-size:18px; font-weight:bold; margin-left:30px;'>Variance</span>", 
+        #     f"<span style='font-size:16px; font-weight:bold; margin-left:25px;'>", var_formula, "</span>",
+        #     f"<span style='font-size:16px; font-weight:bold; margin-left:10px;'>$=$</span>",
+        #     f"<span style='font-size:20px; font-weight:bold;'>", round(var, 2), "</span>", 
+        #     unsafe_allow_html=True)
         
+
+        # Plot population distribtuion
         # Set up population distribution size
         pop_size = 5000
 
@@ -116,12 +162,24 @@ def main():
             population_data = exponentialDist.simulated_data
 
     with col12: 
-        # Plot sample means distribtuion
         st.write(
-            "<span style='font-size:20px; font-weight:bold;'>Sample Means Distribution</span>", 
+            "<span style='font-size:18px; font-weight:bold;'>Sampling Distribution of the Sample Mean</span>", 
             unsafe_allow_html=True)
-        
+        st.write('')
+
         Clt = CentralLimitTheorm(population_data, sample_size, n_samples)
+        
+        mean_of_sample_means = Clt.mean_of_sample_means
+
+        st.write(
+            "<span style='font-size:18px; font-weight:bold; margin-left:30px;'>Mean</span>", 
+            # f"<span style='font-size:16px; font-weight:bold; margin-left:50px;'>", exp_formula, "</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left:10px;'>$=$</span>",
+            f"<span style='font-size:20px; font-weight:bold;'>", round(mean_of_sample_means, 3), "</span>",
+            unsafe_allow_html=True)
+        st.write('')
+
+        # Plot sample means distribtuion
         Clt.plot_clt_sample_mean()
 
 
