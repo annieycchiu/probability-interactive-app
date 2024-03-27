@@ -224,10 +224,9 @@ def main():
 
 
     with col2:
-         Bootstrapping = Bootstrapping(list(popu_data), sample_size, n_resamplings)
-         st.write(f'mean of original sample data: {round(np.mean(Bootstrapping.original_sample), 3)}')
-        #  bootstrapping.bootstrap_means
-         Bootstrapping.plot_sampling_distribution()
+         Boot = Bootstrapping(list(popu_data), sample_size, n_resamplings)
+         st.write(f'mean of original sample data: {round(np.mean(Boot.original_sample), 3)}')
+         Boot.plot_sampling_distribution()
 
 if __name__ == '__main__':
     main()
