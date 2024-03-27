@@ -76,7 +76,7 @@ class Bootstrapping():
         )
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
 
 def main():
