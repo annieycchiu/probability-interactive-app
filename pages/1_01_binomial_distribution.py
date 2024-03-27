@@ -48,7 +48,23 @@ def main():
     setup_sticky_header(header)
 
     # Add customized expander to display functions and formulas
-    add_customized_expander()
+    # add_customized_expander()
+    # Custom CSS 
+    st.markdown(
+        '''
+        <style>
+        .streamlit-expanderHeader {
+            background-color: green;
+            color: white; 
+        }
+        .streamlit-expanderContent {
+            background-color: rgba(240, 242, 246);
+            color: black; 
+        }
+        </style>
+        ''',
+        unsafe_allow_html=True
+    )
     with st.expander("**:pushpin: Binomial Distribution - PMF, CDF, Expectation, Variance**"):
         display_content_page_formulas(
             binomial_pmf, binomial_cdf, binomial_exp, binomial_var, type='Discrete'
