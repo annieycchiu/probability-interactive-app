@@ -1604,6 +1604,10 @@ class BivariateNormalDistribution:
             margin=dict(l=0, r=0, t=0, b=0))
 
         fig = go.Figure(data=[surface_plot, x_trace, y_trace], layout=layout)
+
+        # Hide legend for 'X Distribution' and 'Y Distribution'
+        fig.data[1].update(showlegend=False)
+        fig.data[2].update(showlegend=False)
         
         # Show plot
         st.plotly_chart(fig, use_container_width=True)
