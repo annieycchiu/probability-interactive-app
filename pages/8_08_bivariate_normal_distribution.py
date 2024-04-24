@@ -27,7 +27,7 @@ def main():
         col1, _ ,col2, _, col3 = st.columns([0.30, 0.03, 0.30, 0.03, 0.30])
         with col1:
             st.write(
-                "<span style='font-size:18px; font-weight:bold;'>Distribution X</span>", 
+                "<span style='font-size:18px; font-weight:bold;'>Distribution X (yellow curve)</span>", 
                 unsafe_allow_html=True)
             
             mean_x = st.slider("Mean X", -5.0, 5.0, 0.0)
@@ -35,7 +35,7 @@ def main():
 
         with col2:
             st.write(
-                "<span style='font-size:18px; font-weight:bold;'>Distribution Y</span>", 
+                "<span style='font-size:18px; font-weight:bold;'>Distribution Y (green curve)</span>", 
                 unsafe_allow_html=True)
             
             mean_y = st.slider("Mean Y", -5.0, 5.0, 2.0)
