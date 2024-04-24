@@ -1479,12 +1479,16 @@ class CentralLimitTheorm():
             x=self.mean_of_sample_means, 
             line={'color': self.colors['USF_Gray'], 'dash': 'dash', 'width': 2.5},
             annotation_text=f"Mean: {self.mean_of_sample_means:.3f}", 
+            annotation_font_size=16,
+            annotation_font_color=self.colors['USF_Gray'],
             annotation_position="top")
 
         # Show plot
         st.plotly_chart(fig, use_container_width=True)
 
 
+## Multimodel Distribution
+        
 class MultimodelDistribution():
     def __init__(self, dist1_data, dist2_data, colors=colors):
         self.dist1_data = dist1_data
@@ -1531,4 +1535,75 @@ class MultimodelDistribution():
         fig = go.Figure(data=[hist_trace, kde_trace], layout=layout)
 
         # Show plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
+
+
+## Bivariate Normal Distribution
+
+class BivariateNormalDistribution:
+    def __init__(self, mean_x, mean_y, std_x, std_y, rho, colors=colors):
+        self.mean_x = mean_x
+        self.mean_y = mean_y
+        self.std_x = std_x
+        self.std_y = std_y
+        self.rho = rho
+        self.colors = colors
+
+        self.x = np.linspace(-5, 5, 100)
+        self.y = np.linspace(-5, 5, 100)
+        self.X, self.Y = np.meshgrid(self.x, self.y)
+        self.Z = None
+        self.calculate_height()
+
+    def calculate_height(self):
+        self.Z = np.exp(
+            -(
+                ((self.X - self.mean_x) ** 2) / (2 * (self.std_x ** 2))
+                + ((self.Y - self.mean_y) ** 2) / (2 * (self.std_y ** 2))
+                - (2 * self.rho * (self.x - self.mean_x) * (self.y - self.mean_y)) / (self.std_x * self.std_y)
+            )
+            / (2 * (1 - self.rho ** 2))
+        ) / (2 * np.pi * self.std_x * self.std_y * np.sqrt(1 - self.rho ** 2))
+
+    def plot_bivariate_normal_3D(self):
+        surface_plot = go.Surface(
+            x=self.x,
+            y=self.y,
+            z=self.Z,
+            colorscale='greys',  # blues, greys, portland
+            contours=dict(z=dict(show=True, usecolormap=True)))
+        
+        # Generate traces for marginal distributions
+        x_values = np.linspace(-5, 5, 100)
+        y_values = np.linspace(-5, 5, 100)
+        x_pdf = (1 / (self.std_x * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x_values - self.mean_x) / self.std_x) ** 2)
+        y_pdf = (1 / (self.std_y * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((y_values - self.mean_y) / self.std_y) ** 2)
+        
+        x_trace = go.Scatter3d(
+            x=x_values,
+            y=np.zeros_like(x_values) - 5,
+            z=x_pdf,
+            mode='lines',
+            name='X Distribution',
+            line=dict(color=self.colors['USF_Green'], width=4))
+        
+        y_trace = go.Scatter3d(
+            x=np.zeros_like(y_values) - 5,
+            y=y_values,
+            z=y_pdf,
+            mode='lines',
+            name='Y Distribution',
+            line=dict(color=self.colors['USF_Yellow'], width=4))
+        
+        layout = go.Layout(
+            scene=dict(
+                xaxis=dict(title="X"),
+                yaxis=dict(title="Y"),
+                zaxis=dict(title="Probability Density"),
+            ),
+            margin=dict(l=0, r=0, t=0, b=0))
+
+        fig = go.Figure(data=[surface_plot, x_trace, y_trace], layout=layout)
+        
+        # Show plot
+        st.plotly_chart(fig, use_container_width=True)
