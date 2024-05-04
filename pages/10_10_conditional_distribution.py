@@ -79,7 +79,7 @@ def main():
         total = df.loc[X_val][-1]
         percentages = df.loc[X_val][:-1]/total
 
-        col1, col2 = st.columns([0.15, 0.85])
+        col1, col2 = st.columns([0.2, 0.8])
 
     elif Y == 'Gender':
         Ys = df.index[:-1]
