@@ -16,7 +16,7 @@ df = pd.DataFrame({
 row_names = ['Male', 'Female', 'Total']
 df.index = row_names
 
-# A function to highlight a row based on index
+# Define a function to highlight a row based on index
 def highlight_row(row, selected_row):
     # Check if the row name is the selected one
     if row.name == selected_row:
@@ -27,7 +27,7 @@ def highlight_row(row, selected_row):
     else:
         return ['' for col in row.index]
 
-# A function to highlight a column based on column name
+# Define a function to highlight a column based on column name
 def highlight_column(column, selected_col):
     # Check if the column name is the selected one
     if column.name == selected_col:
