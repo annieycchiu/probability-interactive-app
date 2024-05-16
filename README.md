@@ -36,7 +36,7 @@ To run the Probability and Statistics Learning App on your personal laptop, foll
 
 3. **Install Dependencies**
 
-   - Make sure you have Python and pip installed. Then, install the required dependencies using:
+   Make sure you have Python and pip installed. Then, install the required dependencies using:
 
    ```
    pip install -r requirements.txt
