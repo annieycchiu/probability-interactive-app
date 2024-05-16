@@ -1,4 +1,4 @@
-# Probability and Statistics Learning App
+# Probability and Statistics Learning App [![Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://probability-interactive-app.streamlit.app/)
 
 Welcome to the Probability and Statistics Learning App! This app is designed to help students learn and practice probability and statistics concepts through interactive visualizations and explanations.
 
