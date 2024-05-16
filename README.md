@@ -30,18 +30,18 @@ To run the Probability and Statistics Learning App on your personal laptop, foll
    ```
    cd probability-interactive-app
    ```
-3. **Install Dependencies `<br>`**
-   Make sure you have Python and pip installed. Then, install the required dependencies using:
+3. **Install Dependencies**
+   `<br \>`Make sure you have Python and pip installed. Then, install the required dependencies using:
    ```
    pip install -r requirements.txt
    ```
-4. **Run the App `<br>`**
-   Once the dependencies are installed, you can launch the app using Streamlit:
+4. **Run the App**
+   `<br \>`Once the dependencies are installed, you can launch the app using Streamlit:
    ```
    streamlit run app.py
    ```
-5. **Access the App `<br>`**
-   After running the above command, the app will start running locally. Open your web browser and go to the URL displayed in the terminal to access the app.
+5. **Access the App**
+   `<br \>`After running the above command, the app will start running locally. Open your web browser and go to the URL displayed in the terminal to access the app.
 
 ## Contributing
 
