@@ -44,7 +44,7 @@ To run the Probability and Statistics Learning App on your personal laptop, foll
 
 4. **Run the App**
 
-   - Once the dependencies are installed, you can launch the app using Streamlit:
+   Once the dependencies are installed, you can launch the app using Streamlit:
 
    ```
    streamlit run app.py
