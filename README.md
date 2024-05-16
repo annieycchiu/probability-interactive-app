@@ -52,7 +52,7 @@ To run the Probability and Statistics Learning App on your personal laptop, foll
 
 5. **Access the App**
 
-   - After running the above command, the app will start running locally. Open your web browser and go to the URL displayed in the terminal to access the app.
+   After running the above command, the app will start running locally. Open your web browser and go to the URL displayed in the terminal to access the app.
 
 ## Contributing
 
