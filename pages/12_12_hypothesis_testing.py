@@ -3,27 +3,9 @@ import scipy.stats as stats
 import plotly.graph_objects as go
 import streamlit as st
 
+from utils.stats_viz import calculate_critical_value
 from utils.other_utils import add_logo, setup_sticky_header, add_title
 
-def critical_value(alpha, two_tailed=True):
-    """
-    Calculate the critical value for a given significance level (alpha).
-
-    Parameters:
-    alpha (float): Significance level.
-    two_tailed (bool): If True, calculate for a two-tailed test. If False, calculate for a one-tailed test.
-
-    Returns:
-    float: The critical value (z-score).
-    """
-    if two_tailed:
-        # For two-tailed test, divide alpha by 2
-        alpha /= 2
-
-    # Calculate the z-score for the given alpha
-    critical_val = stats.norm.ppf(1 - alpha)
-    
-    return critical_val
 
 def main():
     # Set up the layout of Streamlit app
@@ -80,15 +62,15 @@ def main():
         alpha = float(alpha.split(' ')[0])
 
         if 'two' in hypo:
-            z_critical_two_tailed = round(critical_value(alpha, two_tailed=True), 2)
+            z_critical_two_tailed = round(calculate_critical_value(alpha, two_tailed=True), 2)
             criticals = [-z_critical_two_tailed, z_critical_two_tailed]
 
         if 'left' in hypo:
-            z_critical_one_tailed = round(critical_value(alpha, two_tailed=False), 2)
+            z_critical_one_tailed = round(calculate_critical_value(alpha, two_tailed=False), 2)
             criticals = [-z_critical_one_tailed]
             
         if 'right' in hypo:
-            z_critical_one_tailed = round(critical_value(alpha, two_tailed=False), 2)
+            z_critical_one_tailed = round(calculate_critical_value(alpha, two_tailed=False), 2)
             criticals = [z_critical_one_tailed]
 
         highlighted_criticals = ", ".join(f"<span style='background-color: rgba(253, 187, 48, 0.4);'>{c}</span>" for c in criticals)
