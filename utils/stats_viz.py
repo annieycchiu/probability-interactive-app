@@ -3,6 +3,7 @@ import random
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import scipy.stats as stats
 
 import plotly.graph_objs as go
 import streamlit as st
@@ -1611,3 +1612,26 @@ class BivariateNormalDistribution:
         
         # Show plot
         st.plotly_chart(fig, use_container_width=True)
+
+
+## Hypothesis Test
+        
+def calculate_critical_value(alpha, two_tailed=True):
+    """
+    Calculate the critical value for a given significance level (alpha).
+
+    Parameters:
+    alpha (float): Significance level.
+    two_tailed (bool): If True, calculate for a two-tailed test. If False, calculate for a one-tailed test.
+
+    Returns:
+    float: The critical value (z-score).
+    """
+    if two_tailed:
+        # For two-tailed test, divide alpha by 2
+        alpha /= 2
+
+    # Calculate the z-score for the given alpha
+    critical_val = stats.norm.ppf(1 - alpha)
+    
+    return critical_val
