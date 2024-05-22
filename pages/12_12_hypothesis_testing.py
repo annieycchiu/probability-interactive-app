@@ -121,7 +121,7 @@ def main():
                 unsafe_allow_html=True)
             
         with subcol2:
-            n = st.slider('sample size', 10, 50, value=30, step=1, label_visibility='collapsed')
+            n = st.slider('sample size', 10, 50, value=15, step=1, label_visibility='collapsed')
 
         population_p = 0.5
         test_statistic = round((p-population_p)/((population_p*(1-population_p)/n)**(1/2)), 2)
@@ -134,13 +134,14 @@ def main():
         st.write()
 
         # 5. P-Value
-        p_value = stats.norm.sf(abs(test_statistic))
+        if 'two' in hypo:
+            p_value = stats.norm.sf(abs(test_statistic))*2
+        else:
+            p_value = stats.norm.sf(abs(test_statistic))
 
         st.write(
             f"<span style='font-size:18px; font-weight:bold;'>5. P-Value: {round(p_value, 5)}</span>", 
             unsafe_allow_html=True)
-        
-        # 6. Conclusion
 
         st.write()
 
