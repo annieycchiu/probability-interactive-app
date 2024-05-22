@@ -121,7 +121,7 @@ def main():
                 unsafe_allow_html=True)
             
         with subcol2:
-            n = st.slider('sample size', 10, 50, value=15, step=1, label_visibility='collapsed')
+            n = st.slider('sample size', 10, 50, value=20, step=1, label_visibility='collapsed')
 
         population_p = 0.5
         test_statistic = round((p-population_p)/((population_p*(1-population_p)/n)**(1/2)), 2)
