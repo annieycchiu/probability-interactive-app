@@ -10,10 +10,12 @@ import streamlit as st
 
 colors = {
     'USF_Green': '#00543C',
+    'USF_Green_rbga_fill': 'rgba(0, 84, 60, 0.4)',
     'USF_Yellow': '#FDBB30',
     'USF_Yellow_rbga_line': 'rgba(253, 187, 48, 0.8)',
     'USF_Yellow_rbga_fill': 'rgba(253, 187, 48, 0.4)',
-    'USF_Gray': '#75787B'
+    'USF_Gray': '#75787B',
+    'Red': '#FF0000'
 }
 
 
@@ -1616,22 +1618,336 @@ class BivariateNormalDistribution:
 
 ## Hypothesis Test
         
-def calculate_critical_value(alpha, two_tailed=True):
-    """
-    Calculate the critical value for a given significance level (alpha).
-
-    Parameters:
-    alpha (float): Significance level.
-    two_tailed (bool): If True, calculate for a two-tailed test. If False, calculate for a one-tailed test.
-
-    Returns:
-    float: The critical value (z-score).
-    """
-    if two_tailed:
+def calculate_critical_value(hypothesis, alpha, distribution, df=None):
+    if hypothesis == 'two-tailed':
         # For two-tailed test, divide alpha by 2
         alpha /= 2
 
-    # Calculate the z-score for the given alpha
-    critical_val = stats.norm.ppf(1 - alpha)
+    if distribution == 'z':
+        # Calculate the z-score for the given alpha
+        critical_val = round(stats.norm.ppf(1 - alpha), 2)
+    elif distribution == 't':
+        # Check if degree of freedom is provided
+        if df is None:
+            raise ValueError("Degrees of freedom 'df' must be provided for t-distribution.")
+        # Calculate the t-score for the given alpha and degrees of freedom
+        critical_val = round(stats.t.ppf(1 - alpha, df), 2)
+    elif distribution == 'chi-square':
+        # Check if degree of freedom is provided
+        if df is None:
+            raise ValueError("Degrees of freedom 'df' must be provided for Chi-square distribution.")
+        # Calculate the chi-square critical value for the given alpha and degrees of freedom
+        if hypothesis == 'two-tailed':
+            critical_val_left = round(stats.chi2.ppf(alpha, df), 2)
+            critical_val_right = round(stats.chi2.ppf(1 - alpha, df), 2)
+        elif hypothesis == 'left-tailed':
+            critical_val_left = round(stats.chi2.ppf(alpha, df), 2)
+        elif hypothesis == 'right-tailed':
+            critical_val_right = round(stats.chi2.ppf(1 - alpha, df), 2)
+
+    if distribution == 'chi-square':
+        if hypothesis == 'two-tailed':
+            critical_vals = [critical_val_left, critical_val_right]
+        elif hypothesis == 'left-tailed':
+            critical_vals = [critical_val_left]
+        elif hypothesis == 'right-tailed':
+            critical_vals = [critical_val_right]
+    else:
+        if hypothesis == 'two-tailed':
+            critical_vals = [-critical_val, critical_val]
+        elif hypothesis == 'left-tailed':
+            critical_vals = [-critical_val]
+        elif hypothesis == 'right-tailed':
+            critical_vals = [critical_val]
+
+    return critical_vals
+
+
+def calculate_p_value(hypothesis, distribution, test_statistic, df=None):
+    if distribution == 'z':
+        if hypothesis == 'two-tailed':
+            p_value = stats.norm.sf(abs(test_statistic))*2
+        else:
+            p_value = stats.norm.sf(abs(test_statistic))
+    elif distribution == 't':
+        # Check if degree of freedom is provided
+        if df == None:
+            raise ValueError("Degrees of freedom 'df' must be provided for t-distribution.")
+        
+        if hypothesis == 'two-tailed':
+            p_value = stats.t.sf(abs(test_statistic), df=df)*2
+        else:
+            p_value = stats.t.sf(abs(test_statistic), df=df)
+    elif distribution == 'chi-square':
+        # Check if degree of freedom is provided
+        if df == None:
+            raise ValueError("Degrees of freedom 'df' must be provided for 'Chi-square distribution.")
+        
+        if hypothesis == 'two-tailed':
+            p_value = stats.chi2.sf(test_statistic, df=df)*2
+        else:
+            p_value = stats.chi2.sf(test_statistic, df=df)
+
+    return p_value
+
+
+class HypothesisTest():
+    def __init__(self, hypothesis, distribution, critical_vals, test_statistic, df=None, colors=colors):
+        self.hypothesis = hypothesis
+        self.critical_vals = critical_vals
+        self.test_statistic = test_statistic
+        self.colors = colors
+
+        # Check if hypothesis is either 'two-tailed' or 'left-tailed' or 'right-tailed'
+        if hypothesis not in ['two-tailed', 'left-tailed',  'right-tailed']:
+            raise ValueError("Invalid distribution type. It can only be either 'two-tailed' or 'left-tailed' or 'right-tailed'.")
+        self.distribution = distribution
+
+        # Check if distribution is either 'z' or 't' or 'chi-square'
+        if distribution not in ['z', 't', 'chi-square']:
+            raise ValueError("Invalid distribution type. Use 'z' for Z-distribution, 't' for t-distribution, or 'chi-square' or 'Chi-square distribution'.")
+        self.distribution = distribution
+
+        # Check if degree of freedom is provided
+        if distribution in ['t', 'chi-square'] and df == None:
+            raise ValueError("Degrees of freedom 'df' must be provided for t-distribution or 'Chi-square distribution'.")
+        self.df = df
+
+        self.x = None
+        self.y = None
+        self.generate_distribution_data()
     
-    return critical_val
+    def generate_distribution_data(self):
+        if self.distribution == 'z':
+            # Generate data for standard normal distribution
+            self.x = np.linspace(-4, 4, 1000)
+            self.y = (1 / np.sqrt(2 * np.pi)) * np.exp(-0.5 * self.x**2)
+        elif self.distribution == 't':
+            # Generate data for t-distribution
+            self.x = np.linspace(-4, 4, 1000)
+            self.y = stats.t.pdf(self.x, self.df)
+        elif self.distribution == 'chi-square':
+            # Generate data for Chi-square distribution
+            self.x = np.linspace(0, 20, 1000)  # Chi-square is defined for x >= 0
+            self.y = stats.chi2.pdf(self.x, self.df)
+
+    def plot_hypothesis(self):
+        # Create a line plot for the relevant distribution
+        fig = go.Figure()
+
+        if self.distribution == 'z':
+            name = 'Standard Normal Distribution (Z-Distribution)'
+        elif self.distribution == 't':
+            name = 't-Distribution'
+        elif self.distribution == 'chi-square':
+            name = 'Chi-square Distribution'
+
+        fig.add_trace(go.Scatter(
+            x=self.x, y=self.y, mode='lines', 
+            marker=dict(color=self.colors['USF_Gray']),
+            name=name))
+
+        fig.update_layout(
+            title=dict(
+                text=f"<span style='font-size:18px; font-weight:bold;'>{name}</span>",
+                y=0.95),
+            yaxis_title='Probability Density',
+            legend=dict(
+                orientation='h', font=dict(size=14),
+                yanchor='top', y=1.2, xanchor='center', x=0.5))
+        
+        for c in self.critical_vals: 
+            # Add vertical line to split rejection and non-rejection region
+            fig.add_shape(
+                type='line',
+                x0=c, y0=0, x1=c, y1=0.3,
+                line=dict(color=self.colors['USF_Yellow'], width=3, dash='dash'))
+            
+            fig.add_annotation(
+                x=c, y=0.36, 
+                text=f'Critical Value', 
+                showarrow=False, 
+                font=dict(size=16, color=self.colors['USF_Yellow']))
+            
+            fig.add_annotation(
+                x=c, y=0.33, 
+                text=f'{c}', 
+                showarrow=False, 
+                font=dict(size=16, color=self.colors['USF_Yellow']))
+            
+            # Highlight the rejection region
+            if c < 0:
+                x_partial = self.x[self.x <= c]
+                y_partial = self.y[:len(x_partial)]
+
+            else:
+                x_partial = self.x[self.x >= c]
+                y_partial = self.y[-len(x_partial):]
+
+            # Fill out the rejection region
+            fig.add_trace(
+                go.Scatter(
+                    x=x_partial, y=y_partial, 
+                    fill='tozeroy', 
+                    fillcolor=self.colors['USF_Yellow_rbga_fill'], 
+                    line=dict(color=self.colors['USF_Yellow_rbga_fill']), name='Rejection Region'))
+            
+        # Fill out the non-rejection region
+        if len(self.critical_vals) == 2:
+            x_partial = self.x[(self.x >= -c) & (self.x <= c)]
+            y_partial = self.y[(self.x >= -c) & (self.x <= c)]
+        else:
+            if self.critical_vals[0] < 0:
+                x_partial = self.x[self.x >= c]
+                y_partial = self.y[-len(x_partial):]
+            else:
+                x_partial = self.x[self.x <= c]
+                y_partial = self.y[:len(x_partial)]
+
+        fig.add_trace(
+            go.Scatter(
+                x=x_partial, y=y_partial, 
+                fill='tozeroy', 
+                fillcolor=self.colors['USF_Green_rbga_fill'], 
+                line=dict(color=self.colors['USF_Green_rbga_fill']), name='Non-Rejection Region'))
+        
+        # Add vertical line of test statistic
+        fig.add_shape(
+            type='line',
+            x0=self.test_statistic, y0=0, x1=self.test_statistic, y1=0.3,
+            line=dict(color=self.colors['Red'], width=3))
+        
+        fig.add_annotation(
+            x=self.test_statistic, y=0.36, 
+            text=f'Test Statistic', 
+            showarrow=False, 
+            font=dict(size=16, color=self.colors['Red']))
+        
+        fig.add_annotation(
+            x=self.test_statistic, y=0.33, 
+            text=f'{self.test_statistic}', 
+            showarrow=False, 
+            font=dict(size=16, color=self.colors['Red']))
+        
+        st.plotly_chart(fig, use_container_width=True)
+
+    def generate_conclusion(self):
+        conclusion = 'Reject the Null Hypothesis' if abs(self.test_statistic) > abs(self.critical_vals[0]) \
+            else 'Do Not Reject the Null Hypothesis'
+
+        if conclusion == 'Reject the Null Hypothesis':
+            detail_1 = '| Test Statistic | > | Critical Value |'
+            detail_2 = 'P-Value < Significance Level'
+        else:
+            detail_1 = '| Test Statistic | <= | Critical Value |'
+            detail_2 = 'P-Value >= Significance Level'
+
+        # Add a markdown section 
+        st.markdown(
+            """
+            <style>
+            .section {
+                background-color: #f0f0f0; 
+                padding: 15px;
+                border-radius: 10px;
+                text-align: center;
+            }
+            .content-text {
+                font-size: 16px; 
+            }
+            .title-text {
+                font-size: 20px; font-weight:bold;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # Add conclusion text inside the section
+        st.markdown(
+            f'<div class="section"><div class="title-text">{conclusion}</div></div>',
+            unsafe_allow_html=True)
+        
+        st.markdown(
+            f'<div class="section"><div class="content-text">{detail_1}</div></div>',
+            unsafe_allow_html=True)
+        
+        st.markdown(
+            f'<div class="section"><div class="content-text">{detail_2}</div></div>',
+            unsafe_allow_html=True)
+
+
+def section_1_hypothesis(parameter, key):
+    # Check if the parameter to compare is either 'mean' or 'proportion' or 'variance'
+    if parameter not in ['mean', 'proportion', 'variance']:
+        raise ValueError("This app only support the hypothesis test for either 'mean' or 'proportion' or 'variance'.")
+    
+    if parameter == 'mean':
+        param = '\mu'
+    if parameter == 'proportion':
+        param = 'p'
+    if parameter == 'variance':
+        param = '\sigma^2'
+    
+    hypo_options = [
+        f"$$H_0: {param} = {param}_0 \quad H_a: {param} \\neq {param}_0 \quad$$ (two-tailed)",
+        f"$$H_0: {param} = {param}_0 \quad H_a: {param} > {param}_0 \quad$$ (one-tailed, right-tailed)",
+        f"$$H_0: {param} = {param}_0 \quad H_a: {param} < {param}_0 \quad$$ (one-tailed, left-tailed)"
+    ]
+        
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>1. Hypothesis</span>", 
+        unsafe_allow_html=True)
+
+    hypothesis = st.radio(
+        'hypothesis', hypo_options, horizontal=True, 
+        label_visibility='collapsed',
+        key=f'hypo_{key}')
+    
+    if 'two-tailed' in hypothesis:
+        hypothesis = 'two-tailed'
+    elif 'right-tailed' in hypothesis:
+        hypothesis = 'right-tailed'
+    elif 'left-tailed' in hypothesis:
+        hypothesis = 'left-tailed'
+
+    st.write('')
+
+    return hypothesis
+
+
+def section_2_significance_level(key):
+    st.write(
+        "<span style='font-size:18px; font-weight:bold;'>2. Significance Level</span>", 
+        unsafe_allow_html=True)
+    
+    alpha = st.radio(
+        'alpha', ['0.05 (5%)', '0.01 (1%)', '0.10 (10%)'], 
+        horizontal=True, 
+        label_visibility='collapsed',
+        key=f'sig_{key}')
+    
+    alpha = float(alpha.split(' ')[0])
+
+    st.write('')
+
+    return alpha
+
+
+def section_4_critical_value(critical_vals):
+    highlighted_criticals = \
+        ", ".join(f"<span style='background-color: rgba(253, 187, 48, 0.4);'>{c}</span>" for c in critical_vals)
+    
+    st.write(
+        f"<span style='font-size:18px; font-weight:bold;'>4. Critical Value: {highlighted_criticals}</span>", 
+        unsafe_allow_html=True)
+    
+    st.write()
+
+
+def section_5_p_value(p_value):
+    st.write(
+        f"<span style='font-size:18px; font-weight:bold;'>5. P-Value: {round(p_value, 5)}</span>", 
+        unsafe_allow_html=True)
+
+    st.write()
