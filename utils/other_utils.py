@@ -90,9 +90,9 @@ def add_logo():
             [data-testid="stSidebarNav"] {{
                 background-image: url('data:image/png;base64,{encode_image_to_base64("./assets/USF_MSDS_logo.png")}');
                 background-repeat: no-repeat;
-                background-size: 40%;
+                background-size: 50%;
                 padding-top: 250px;
-                background-position: 55px 10px;
+                background-position: 55px 15px;
             }}
         </style>
         """,
