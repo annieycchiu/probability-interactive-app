@@ -91,8 +91,8 @@ def add_logo():
                 background-image: url('data:image/png;base64,{encode_image_to_base64("./assets/USF_MSDS_logo.png")}');
                 background-repeat: no-repeat;
                 background-size: 50%;
-                padding-top: 250px;
-                background-position: 55px 15px;
+                padding-top: 200px;
+                background-position: 60px 10px;
             }}
         </style>
         """,
