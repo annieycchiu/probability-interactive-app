@@ -92,7 +92,7 @@ def add_logo():
                 background-repeat: no-repeat;
                 background-size: 50%;
                 padding-top: 200px;
-                background-position: 60px 10px;
+                background-position: 60px 0px;
             }}
         </style>
         """,
