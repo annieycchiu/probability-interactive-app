@@ -69,14 +69,14 @@ def main():
         # Plot the simulation
         binomialDist.plot_empirial_pmf()
 
-    col31, _ = st.columns([0.50, 0.50])
-    with col31:
-        # Display probability table
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Probability Table</span>", 
-            unsafe_allow_html=True)
+    # col31, _ = st.columns([0.50, 0.50])
+    # with col31:
+    #     # Display probability table
+    #     st.write(
+    #         "<span style='font-size:18px; font-weight:bold;'>Probability Table</span>", 
+    #         unsafe_allow_html=True)
         
-        binomialDist.plot_prob_table()
+    #     binomialDist.plot_prob_table()
 
 if __name__ == '__main__':
     main()

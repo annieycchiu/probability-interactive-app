@@ -64,14 +64,14 @@ def main():
         # Plot the simulation
         poissonDist.plot_empirial_pmf()
 
-    col21, _ = st.columns([0.50, 0.50])
-    with col21:
-        # Display probability table
-        st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Probability Table</span>", 
-            unsafe_allow_html=True)
+    # col21, _ = st.columns([0.50, 0.50])
+    # with col21:
+    #     # Display probability table
+    #     st.write(
+    #         "<span style='font-size:18px; font-weight:bold;'>Probability Table</span>", 
+    #         unsafe_allow_html=True)
         
-        poissonDist.plot_prob_table()
+    #     poissonDist.plot_prob_table()
 
 if __name__ == '__main__':
     main()

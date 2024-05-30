@@ -73,7 +73,7 @@ def main():
                 st.write('\n')
 
                 st.write(
-                    "<span style='font-size:16px;'>Assume the population mean $$\mu_0$$ = 50,</span>", 
+                    "<span style='font-size:16px;'>Assume the population mean $$\mu_0$$ = 20,</span>", 
                     unsafe_allow_html=True)
 
                 # sample mean
@@ -85,7 +85,7 @@ def main():
                     
                 with subcol2:
                     sample_mean = st.slider(
-                        'sample mean ', 0, 100, value=75, step=1, 
+                        'sample mean ', -10, 50, value=25, step=1, 
                         label_visibility='collapsed',
                         key=f'test_stat_{key}_1')
                 
@@ -98,7 +98,7 @@ def main():
                     
                 with subcol2:
                     population_sd = st.slider(
-                        'population SD ', 0, 100, value=75, step=1, 
+                        'population SD ', 0, 30, value=10, step=1, 
                         label_visibility='collapsed',
                         key=f'test_stat_{key}_2')
 
@@ -111,11 +111,11 @@ def main():
                     
                 with subcol2:
                     n = st.slider(
-                        'sample size', 10, 50, value=20, step=1, 
+                        'sample size', 30, 100, value=30, step=1, 
                         label_visibility='collapsed',
                         key=f'test_stat_{key}_3')
 
-                population_mean = 50
+                population_mean = 20
                 test_statistic = round((sample_mean-population_mean)/(population_sd/np.sqrt(n)), 2)
                 highlighted_test_stat = \
                     f"<span style='background-color: rgba(255, 0, 0, 0.4); font-weight:bold;'>{test_statistic}</span>"
@@ -183,19 +183,19 @@ def main():
                 st.write('\n')
 
                 st.write(
-                    "<span style='font-size:16px;'>Assume the population mean $$\mu_0$$ = 50,</span>", 
+                    "<span style='font-size:16px;'>Assume the population mean $$\mu_0$$ = 20,</span>", 
                     unsafe_allow_html=True)
 
                 # sample mean
                 subcol1, subcol2, _ = st.columns([0.35, 0.5, 0.15])
                 with subcol1:
                     st.write(
-                        "<span style='font-size:16px;'>sample mean ($$\bar{x}$$)</span>", 
+                        "<span style='font-size:16px;'>sample mean</span>", 
                         unsafe_allow_html=True)
                     
                 with subcol2:
                     sample_mean = st.slider(
-                        'sample mean ', 0, 100, value=75, step=1, 
+                        'sample mean ', -30, 50, value=25, step=1, 
                         label_visibility='collapsed',
                         key=f'test_stat_{key}_1')
                 
@@ -208,7 +208,7 @@ def main():
                     
                 with subcol2:
                     sample_sd = st.slider(
-                        'sample SD ', 0, 100, value=75, step=1, 
+                        'sample SD ', 0, 30, value=10, step=1, 
                         label_visibility='collapsed',
                         key=f'test_stat_{key}_2')
 
@@ -221,11 +221,11 @@ def main():
                     
                 with subcol2:
                     n = st.slider(
-                        'sample size', 10, 50, value=20, step=1, 
+                        'sample size', 5, 30, value=10, step=1, 
                         label_visibility='collapsed',
                         key=f'test_stat_{key}_3')
 
-                population_mean = 50
+                population_mean = 20
                 test_statistic = round((sample_mean-population_mean)/(sample_sd/np.sqrt(n)), 2)
                 highlighted_test_stat = \
                     f"<span style='background-color: rgba(255, 0, 0, 0.4); font-weight:bold;'>{test_statistic}</span>"
