@@ -37,10 +37,10 @@ def main():
                 p = st.slider('Probability of success (p)', min_value=0.0, max_value=1.0, value=0.5, step=0.01)
         with col3:
             st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Simulation:</span>", 
+            "<span style='font-size:18px; font-weight:bold;'>Empirical:</span>", 
             unsafe_allow_html=True)
         with col4:
-            size = st.slider('Number of simulations', min_value=1, max_value=3000, value=500)
+            size = st.slider('Sample size', min_value=1, max_value=3000, value=500)
 
         st.write("<div class='fixed-header'/>", unsafe_allow_html=True)
 
@@ -67,7 +67,7 @@ def main():
 
     with col22:
         # Plot the simulation
-        binomialDist.plot_empirial_pmf()
+        binomialDist.plot_empirical_pmf()
 
     # col31, _ = st.columns([0.50, 0.50])
     # with col31:

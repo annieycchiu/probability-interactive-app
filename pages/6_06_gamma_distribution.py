@@ -33,13 +33,13 @@ def main():
             with sub_col1:
                 shape = st.slider('Shape (α)', min_value=0.1, max_value=10.0, value=2.0, step=0.01)
             with sub_col2:
-                scale = st.slider('Inverse Scale/ Rate (β)', min_value=0.1, max_value=10.0, value=2.0, step=0.01)
+                scale = st.slider('Inverse Scale or Rate (β)', min_value=0.1, max_value=10.0, value=2.0, step=0.01)
         with col3:
             st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Simulation:</span>", 
+            "<span style='font-size:18px; font-weight:bold;'>Empirical:</span>", 
             unsafe_allow_html=True)
         with col4:
-            size = st.slider('Number of simulations', min_value=1, max_value=3000, value=500)
+            size = st.slider('Sample size', min_value=1, max_value=3000, value=500)
 
         st.write("<div class='fixed-header'/>", unsafe_allow_html=True)
 

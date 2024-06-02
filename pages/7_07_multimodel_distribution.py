@@ -1,13 +1,13 @@
 import streamlit as st
 
 from utils.other_utils import add_logo, add_title, setup_sticky_header
-from utils.stats_viz import UniformDistribution, NormalDistribution, ExponentialDistribution, MultimodelDistribution
+from utils.stats_viz import UniformDistribution, NormalDistribution, ExponentialDistribution, MultimodalDistribution
 
 
 def main():
     # Set up the layout of Streamlit app
     st.set_page_config(
-        page_title='Multimodel Distribution',
+        page_title='Multimodal Distribution',
         page_icon=':bar_chart:',
         layout='wide',
         initial_sidebar_state='collapsed'
@@ -19,7 +19,7 @@ def main():
     # Define sticky header
     header = st.container()
     with header:
-        title = 'Multimodel Distribution'
+        title = 'Multimodal Distribution'
         add_title(title)
 
         size = 5000
@@ -128,8 +128,8 @@ def main():
     # Set up sticky header
     setup_sticky_header(header)
 
-    multimodelDist = MultimodelDistribution(dist1_data, dist2_data)
-    multimodelDist.plot_distribution()
+    multimodalDist = MultimodalDistribution(dist1_data, dist2_data)
+    multimodalDist.plot_distribution()
 
 
 if __name__ == "__main__":

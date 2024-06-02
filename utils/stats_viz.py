@@ -112,7 +112,7 @@ class BinomialDistribution:
         # Display HTML table with horizontal scrollbar
         st.write(html_with_scrollbar, unsafe_allow_html=True)
 
-    def plot_empirial_pmf(self):
+    def plot_empirical_pmf(self):
         """
         Plot the simulation results using Plotly.
         """
@@ -152,7 +152,7 @@ class BinomialDistribution:
 
         fig.update_layout(
             go.Layout(
-                title="<span style='font-size:18px; font-weight:bold;'>Binomial Distribution Empirial PMF (Simulation)</span>",
+                title="<span style='font-size:18px; font-weight:bold;'>Binomial Distribution Empirical PMF (Simulation)</span>",
                 xaxis_title='Number of Successes',
                 yaxis_title='Frequency (Count)',
                 hoverlabel=dict(font=dict(size=14), bgcolor=self.colors['USF_Yellow']),
@@ -412,7 +412,7 @@ class PoissonDistribution:
         # Display HTML table with horizontal scrollbar
         st.write(html_with_scrollbar, unsafe_allow_html=True)
 
-    def plot_empirial_pmf(self):
+    def plot_empirical_pmf(self):
         """
         Plot the simulation results using Plotly.
         """
@@ -445,7 +445,7 @@ class PoissonDistribution:
 
         # Set layout
         fig.update_layout(
-            title="<span style='font-size:18px; font-weight:bold;'>Poisson Distribution Empirial PMF (Simulation)</span>",
+            title="<span style='font-size:18px; font-weight:bold;'>Poisson Distribution Empirical PMF (Simulation)</span>",
             xaxis_title='Number of Events',
             yaxis_title='Frequency (Count)',
             hoverlabel=dict(font=dict(size=14), bgcolor=self.colors['USF_Yellow']),
@@ -1490,9 +1490,9 @@ class CentralLimitTheorm():
         st.plotly_chart(fig, use_container_width=True)
 
 
-## Multimodel Distribution
+## Multimodal Distribution
         
-class MultimodelDistribution():
+class MultimodalDistribution():
     def __init__(self, dist1_data, dist2_data, colors=colors):
         self.dist1_data = dist1_data
         self.dist2_data = dist2_data

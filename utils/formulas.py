@@ -6,7 +6,7 @@ binomial_exp = r'$E[X] = np$'
 binomial_var = r'$Var(X) = np(1-p)$'
 
 # Poisson distribution
-poisson_notation = r'$X \sim \mathrm{Poi}(\lambda)$'
+poisson_notation = r'$X \sim \mathrm{Pois}(\lambda)$'
 poisson_pmf = r'$f(k) = \Pr(X=k) = \frac{\lambda^k e^{-\lambda}}{k!} \quad \text{for } k = 0, 1, 2, ..., n$'
 poisson_cdf = r'$F(k) = \Pr(X=k) \sum_{i=0}^{k} \frac{\lambda^i e^{-\lambda}}{i!}$'
 poisson_exp = r'$E[X] = \lambda$'

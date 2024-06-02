@@ -30,13 +30,13 @@ def main():
             "<span style='font-size:18px; font-weight:bold;'>Parameters:</span>", 
             unsafe_allow_html=True)
         with col2:
-            lmbda = st.slider('Constant average rate (λ)', min_value=0, max_value=20, value=5, step=1)
+            lmbda = st.slider('Rate (λ)', min_value=0, max_value=20, value=5, step=1)
         with col3:
             st.write(
-            "<span style='font-size:18px; font-weight:bold;'>Simulation:</span>", 
+            "<span style='font-size:18px; font-weight:bold;'>Empirical:</span>", 
             unsafe_allow_html=True)
         with col4:
-            size = st.slider('Number of simulations', min_value=1, max_value=3000, value=500)
+            size = st.slider('Sample size', min_value=1, max_value=3000, value=500)
 
         st.write("<div class='fixed-header'/>", unsafe_allow_html=True)
 
@@ -62,7 +62,7 @@ def main():
 
     with col12:
         # Plot the simulation
-        poissonDist.plot_empirial_pmf()
+        poissonDist.plot_empirical_pmf()
 
     # col21, _ = st.columns([0.50, 0.50])
     # with col21:

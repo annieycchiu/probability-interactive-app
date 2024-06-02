@@ -60,8 +60,7 @@ def main():
         st.write(
             f"<span style='font-size:20px;'>The conditional distribution of "
             f"<span style='color:#00543C; font-weight:bold;'>Y</span> given "
-            f"<span style='color:#FDBB30; font-weight:bold;'>X </span> is "
-            f"<span style='color:#FDBB30; font-weight:bold;'>X value</span></span>", 
+            f"<span style='color:#FDBB30; font-weight:bold;'>X = x-value</span></span>", 
             unsafe_allow_html=True
         )
         
@@ -69,7 +68,7 @@ def main():
         with col1:
             st.write("<span style='color:#00543C; font-size:18px; font-weight:bold;'>Y</span>", unsafe_allow_html=True)
             st.write("<span style='color:#FDBB30; font-size:18px; font-weight:bold;'>X</span>", unsafe_allow_html=True)
-            st.write("<span style='color:#FDBB30; font-size:18px; font-weight:bold;'>X value</span>", unsafe_allow_html=True)
+            st.write("<span style='color:#FDBB30; font-size:18px; font-weight:bold;'>x-value</span>", unsafe_allow_html=True)
 
         with col2:
             Y = st.radio('Y', ['Course', 'Gender'],horizontal=True, label_visibility='collapsed')
