@@ -2011,7 +2011,7 @@ class Bootstrapping():
             xref='x', yref='y domain',
             text=f'Estimated {self.statistic_text}<br>{round(self.stat_estimate, 2)}', 
             showarrow=False, 
-            font=dict(size=16, color=self.colors['Red']))
+            font=dict(size=14, color=self.colors['Red']))
         
         
         # Add vertical line for the confidence interval
@@ -2022,11 +2022,11 @@ class Bootstrapping():
             line=dict(color=self.colors['USF_Green'], width=3, dash='dash'))
         
         fig.add_annotation(
-            x=self.lower_bound, y=1.2, 
+            x=self.lower_bound, y=1.25, 
             xref='x', yref='y domain',
-            text=f'{self.alpha/2*100}th<br>percentile', 
+            text=f'{self.alpha/2*100}th<br>percentile<br>{round(self.lower_bound, 2)}', 
             showarrow=False, 
-            font=dict(size=16, color=self.colors['USF_Green']))
+            font=dict(size=14, color=self.colors['USF_Green']))
         
         fig.add_shape(
             type='line',
@@ -2035,11 +2035,11 @@ class Bootstrapping():
             line=dict(color=self.colors['USF_Green'], width=3, dash='dash'))
         
         fig.add_annotation(
-            x=self.upper_bound, y=1.2, 
+            x=self.upper_bound, y=1.25, 
             xref='x', yref='y domain',
-            text=f'{(1-self.alpha/2)*100}th<br>percentile', 
+            text=f'{(1-self.alpha/2)*100}th<br>percentile<br>{round(self.upper_bound, 2)}', 
             showarrow=False, 
-            font=dict(size=16, color=self.colors['USF_Green']))
+            font=dict(size=14, color=self.colors['USF_Green']))
         
         # Add background rectangle for the confidence interval
         fig.add_shape(
@@ -2050,7 +2050,7 @@ class Bootstrapping():
         )
 
         fig.add_annotation(
-            x=self.stat_estimate, y=0.3, 
+            x=self.stat_estimate, y=0.8, 
             xref='x', yref='y domain',
             text=f'<b>{int((1-self.alpha)*100)}% confidence interval</b>', 
             showarrow=False, 
