@@ -2044,7 +2044,7 @@ class Bootstrapping():
             xref='x', yref='y domain',
             text=f'<b>{int((1-self.alpha)*100)}% confidence interval</b>', 
             showarrow=False, 
-            font=dict(size=18, color=self.colors['USF_Green']))
+            font=dict(size=16, color=self.colors['USF_Green']))
         
 
         # Update layout
