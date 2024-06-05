@@ -1951,3 +1951,120 @@ def section_5_p_value(p_value):
         unsafe_allow_html=True)
 
     st.write()
+
+
+## Bootstrapping
+    
+class Bootstrapping():
+    def __init__(self, original_sample, n_resamplings, statistic_text, alpha, colors=colors):
+        self.original_sample = original_sample
+        self.n_resamplings = n_resamplings
+        self.statistic_text = statistic_text
+        self.statistic = np.mean if statistic_text == 'mean' else np.median
+        self.alpha = alpha
+        self.colors = colors
+
+        self.sample_size = len(self.original_sample)
+
+        self.bootstrap_samples = None
+        self.stat_estimate = None
+        self.lower_bound = None
+        self.upper_bound = None
+        self.bootstrap()
+
+
+    def bootstrap(self):
+        self.bootstrap_samples = []
+        self.stats = []
+        for _ in range(self.n_resamplings):
+            bootstrap_sample = np.random.choice(self.original_sample, size=self.sample_size, replace=True)
+            self.bootstrap_samples.append(bootstrap_sample)
+
+            stat = self.statistic(bootstrap_sample)
+            self.stats.append(stat)
+
+            self.stat_estimate = np.mean(self.stats)
+            self.lower_bound = np.percentile(self.stats, 100 * self.alpha / 2)
+            self.upper_bound = np.percentile(self.stats, 100 * (1 - self.alpha / 2))
+
+    def plot_sampling_distribution(self):
+        # Create histogram 
+        fig = go.Figure()
+
+        # Add trace for the histogram of bootstrapped statistics
+        fig.add_trace(
+            trace=go.Histogram(
+                x=self.stats, nbinsx=30,
+                marker=dict(
+                    color=self.colors['USF_Yellow_rbga_fill'],
+                    line=dict(color=self.colors['USF_Yellow_rbga_line'], width=1))))
+
+        # Add vertical line for the estimated statistic
+        fig.add_shape(
+            type='line',
+            x0=self.stat_estimate, y0=0, x1=self.stat_estimate, y1=1,
+            xref='x', yref='y domain',
+            line=dict(color=self.colors['Red'], width=3))
+        
+        fig.add_annotation(
+            x=self.stat_estimate, y=1.2, 
+            xref='x', yref='y domain',
+            text=f'Estimated {self.statistic_text}<br>{round(self.stat_estimate, 2)}', 
+            showarrow=False, 
+            font=dict(size=16, color=self.colors['Red']))
+        
+        
+        # Add vertical line for the confidence interval
+        fig.add_shape(
+            type='line',
+            x0=self.lower_bound, y0=0, x1=self.lower_bound, y1=1,
+            xref='x', yref='y domain',
+            line=dict(color=self.colors['USF_Green'], width=3, dash='dash'))
+        
+        fig.add_annotation(
+            x=self.lower_bound, y=1.2, 
+            xref='x', yref='y domain',
+            text=f'{self.alpha/2*100}th<br>percentile', 
+            showarrow=False, 
+            font=dict(size=16, color=self.colors['USF_Green']))
+        
+        fig.add_shape(
+            type='line',
+            x0=self.upper_bound, y0=0, x1=self.upper_bound, y1=1,
+            xref='x', yref='y domain',
+            line=dict(color=self.colors['USF_Green'], width=3, dash='dash'))
+        
+        fig.add_annotation(
+            x=self.upper_bound, y=1.2, 
+            xref='x', yref='y domain',
+            text=f'{(1-self.alpha/2)*100}th<br>percentile', 
+            showarrow=False, 
+            font=dict(size=16, color=self.colors['USF_Green']))
+        
+        # Add background rectangle for the confidence interval
+        fig.add_shape(
+            type='rect',
+            x0=self.lower_bound, y0=0, x1=self.upper_bound, y1=1,
+            xref='x', yref='paper',
+            fillcolor=self.colors['USF_Green'], opacity=0.15, layer='below', line_width=0
+        )
+
+        fig.add_annotation(
+            x=self.stat_estimate, y=0.3, 
+            xref='x', yref='y domain',
+            text=f'<b>{int((1-self.alpha)*100)}% confidence interval</b>', 
+            showarrow=False, 
+            font=dict(size=18, color=self.colors['USF_Green']))
+        
+
+        # Update layout
+        fig.update_layout(
+            title={
+                'text': f"<span style='font-size:18px; font-weight:bold;'>Sampling Distribution of Bootstrapped {self.statistic_text}</span>",
+                'y': 0.97, 'yanchor': 'top'},
+            xaxis_title=f'Sample {self.statistic_text}',
+            yaxis_title='Frequency',
+        )
+
+        # Show plot
+        st.plotly_chart(fig, use_container_width=True)
