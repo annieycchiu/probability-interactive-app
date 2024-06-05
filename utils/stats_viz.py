@@ -1544,76 +1544,66 @@ class MultimodalDistribution():
 ## Bivariate Normal Distribution
 
 class BivariateNormalDistribution:
-    def __init__(self, mean_x, mean_y, std_x, std_y, rho, colors=colors):
-        self.mean_x = mean_x
-        self.mean_y = mean_y
-        self.std_x = std_x
-        self.std_y = std_y
-        self.rho = rho
+    def __init__(self, mean_x1, mean_x2, std_x1, std_x2, r, colors=colors):
+        self.mean_x1 = mean_x1
+        self.mean_x2 = mean_x2
+        self.std_x1 = std_x1
+        self.std_x2 = std_x2
+        self.r = r
         self.colors = colors
 
-        self.x = np.linspace(-5, 5, 100)
-        self.y = np.linspace(-5, 5, 100)
-        self.X, self.Y = np.meshgrid(self.x, self.y)
-        self.Z = None
-        self.calculate_height()
+        # Generate the data
+        self.x1 = np.arange(0, 20.1, 0.1)
+        self.x2 = np.arange(0, 20.1, 0.1)
+        self.X1, self.X2 = np.meshgrid(self.x1, self.x2)
 
-    def calculate_height(self):
-        self.Z = np.exp(
+        # Define colorscale
+        self.colorscale = [
+            [0, self.colors['USF_Green']],
+            [1, self.colors['USF_Yellow']],
+            ]
+
+        self.phi = None
+        self.calculate_bivariate_normal_density()
+
+    def calculate_bivariate_normal_density(self):
+        pi = np.pi
+        
+        self.phi = np.exp(
             -(
-                ((self.X - self.mean_x) ** 2) / (2 * (self.std_x ** 2))
-                + ((self.Y - self.mean_y) ** 2) / (2 * (self.std_y ** 2))
-                - (2 * self.rho * (self.x - self.mean_x) * (self.y - self.mean_y)) / (self.std_x * self.std_y)
-            )
-            / (2 * (1 - self.rho ** 2))
-        ) / (2 * np.pi * self.std_x * self.std_y * np.sqrt(1 - self.rho ** 2))
+                (self.X1 - self.mean_x1)**2 / (2 * self.std_x1**2) 
+                - 2 * self.r * (self.X1 - self.mean_x1) * (self.X2 - self.mean_x2) / (self.std_x1 * self.std_x2) 
+                + (self.X2 - self.mean_x2)**2 / (2 * self.std_x2**2)
+            ) / (1 - self.r**2)
+        ) / (
+            2 * pi * self.std_x1 * self.std_x2 * np.sqrt(1 - self.r**2)
+        )
 
-    def plot_bivariate_normal_3D(self):
-        surface_plot = go.Surface(
-            x=self.x,
-            y=self.y,
-            z=self.Z,
-            colorscale='greys',  # blues, greys, portland
-            contours=dict(z=dict(show=True, usecolormap=True)))
+    def plot_2D_contour(self):
+        fig_2d = go.Figure(
+            data=[go.Contour(z=self.phi, x=self.x1, y=self.x2, colorscale=self.colorscale)])
         
-        # Generate traces for marginal distributions
-        x_values = np.linspace(-5, 5, 100)
-        y_values = np.linspace(-5, 5, 100)
-        x_pdf = (1 / (self.std_x * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x_values - self.mean_x) / self.std_x) ** 2)
-        y_pdf = (1 / (self.std_y * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((y_values - self.mean_y) / self.std_y) ** 2)
+        fig_2d.update_layout(
+            title='Bivariate Normal Density (2D)',
+            xaxis=dict(title='x1', range=[0, 20], showgrid=False),
+            yaxis=dict(title='x2', range=[0, 20], showgrid=False, scaleanchor='x', scaleratio=1), 
+        )
+
+        st.plotly_chart(fig_2d, use_container_width=True)
+
+    def plot_3D_surface(self):
+        fig_3d = go.Figure(
+            data=[go.Surface(z=self.phi, x=self.X1, y=self.X2, colorscale=self.colorscale)])
         
-        x_trace = go.Scatter3d(
-            x=x_values,
-            y=np.zeros_like(x_values) - 5,
-            z=x_pdf,
-            mode='lines',
-            name='X Distribution',
-            line=dict(color=self.colors['USF_Green'], width=4))
-        
-        y_trace = go.Scatter3d(
-            x=np.zeros_like(y_values) - 5,
-            y=y_values,
-            z=y_pdf,
-            mode='lines',
-            name='Y Distribution',
-            line=dict(color=self.colors['USF_Yellow'], width=4))
-        
-        layout = go.Layout(
+        fig_3d.update_layout(
+            title='Bivariate Normal Density (3D)',
             scene=dict(
-                xaxis=dict(title="X"),
-                yaxis=dict(title="Y"),
-                zaxis=dict(title="Probability Density"),
-            ),
-            margin=dict(l=0, r=0, t=0, b=0))
-
-        fig = go.Figure(data=[surface_plot, x_trace, y_trace], layout=layout)
-
-        # Hide legend for 'X Distribution' and 'Y Distribution'
-        fig.data[1].update(showlegend=False)
-        fig.data[2].update(showlegend=False)
+                xaxis=dict(title='x1', range=[0, 20]),
+                yaxis=dict(title='x2', range=[0, 20]),
+                zaxis_title='phi',
+                camera_eye=dict(x=-1.5, y=-1.5, z=0.5)))
         
-        # Show plot
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig_3d, use_container_width=True)
 
 
 ## Hypothesis Test

@@ -1,6 +1,4 @@
 import streamlit as st
-import numpy as np
-import plotly.graph_objs as go
 
 from utils.other_utils import add_logo, setup_sticky_header, add_title
 from utils.stats_viz import BivariateNormalDistribution
@@ -24,39 +22,43 @@ def main():
         title = 'Bivariate Normal Distribution'
         add_title(title)
 
-        col1, _ ,col2, _, col3 = st.columns([0.30, 0.03, 0.30, 0.03, 0.30])
+        col1, _, col2, _, col3 = st.columns([0.30, 0.03, 0.30, 0.03, 0.30])
         with col1:
             st.write(
-                "<span style='font-size:18px; font-weight:bold;'>Distribution X (yellow curve)</span>", 
+                "<span style='font-size:18px; font-weight:bold;'>Distribution X1</span>", 
                 unsafe_allow_html=True)
             
-            mean_x = st.slider("Mean X", -5.0, 5.0, 0.0)
-            std_x = st.slider("Standard Deviation X", 0.1, 3.0, 1.0)
+            mean_x1 = st.slider("Mean of X1", 5.0, 15.0, 7.0)
+            std_x1 = st.slider("Standard Deviation of X1", 1.0, 5.0, 1.0)
 
         with col2:
             st.write(
-                "<span style='font-size:18px; font-weight:bold;'>Distribution Y (green curve)</span>", 
+                "<span style='font-size:18px; font-weight:bold;'>Distribution X2</span>", 
                 unsafe_allow_html=True)
             
-            mean_y = st.slider("Mean Y", -5.0, 5.0, 2.0)
-            std_y = st.slider("Standard Deviation Y", 0.1, 3.0, 0.5)
+            mean_x2 = st.slider("Mean of X2", 5.0, 15.0, 10.0)
+            std_x2 = st.slider("Standard Deviation of X2", 1.0, 5.0, 3.0)
 
         with col3:
             st.write(
                 "<span style='font-size:18px; font-weight:bold;'>Correlation Coefficient (ρ)</span>", 
                 unsafe_allow_html=True)
             
-            rho = st.slider("Correlation Coefficient (ρ)", -1.0, 1.0, 0.0, label_visibility='collapsed')
+            r = st.slider("Correlation Coefficient (ρ)", -1.0, 1.0, 0.0, label_visibility='collapsed')
 
         st.write("<div class='fixed-header'/>", unsafe_allow_html=True)
 
     # Set up sticky header
     setup_sticky_header(header)
 
-    biNormDist = BivariateNormalDistribution(mean_x, mean_y, std_x, std_y, rho)
+    bivariateNormalDist = BivariateNormalDistribution(mean_x1, mean_x2, std_x1, std_x2, r)
 
-    # Generate surface plot based on user inputs
-    biNormDist.plot_bivariate_normal_3D()
+    col1, _, col2 = st.columns([0.45, 0.05, 0.45])
+    with col1:
+        bivariateNormalDist.plot_2D_contour()
+
+    with col2:
+        bivariateNormalDist.plot_3D_surface()
 
 
 if __name__ == '__main__':
