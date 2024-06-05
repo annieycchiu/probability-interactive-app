@@ -17,7 +17,7 @@ def main():
     # Define sticky header
     header = st.container()
     with header:
-        title = 'USF MSDS504 Statistics & Probability'
+        title = ':bar_chart: USF MSDS504 Statistics & Probability'
         add_title(title)
 
         welcome_text = 'Welcome to the Probability and Statistics Learning App! This app is designed to help students learn and practice probability and statistics concepts through interactive visualizations and explanations.'
