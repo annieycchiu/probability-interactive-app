@@ -1,10 +1,11 @@
 import streamlit as st
 
 def display_homepage_formulas(
-        dist, notation, pmf_pdf, cdf, exp, var, type=['Discrete', 'Continuous']):
+        title, notation, pmf_pdf, cdf, exp, var, type=['Discrete', 'Continuous']):
+    
     st.write(
-    "<span style='font-size:22px; font-weight:bold;'>", dist, "</span>",
-    unsafe_allow_html=True)
+        "<span style='font-size:22px; font-weight:bold;'>", title, "</span>",
+        unsafe_allow_html=True)
 
     st.write('')
 
@@ -159,16 +160,16 @@ def add_exp_var(expectation_formula, variance_formula):
 def add_customized_expander():
     st.markdown(
         """
-    <style>
-        .streamlit-expanderHeader {
-            background-color: rgba(240, 242, 246);
-            color: black;
-        }
-        .streamlit-expanderContent {
-            background-color: rgba(240, 242, 246);
-            color: black; 
-        }
-    </style>
+        <style>
+            .streamlit-expanderHeader {
+                background-color: rgba(240, 242, 246);
+                color: black;
+            }
+            .streamlit-expanderContent {
+                background-color: rgba(240, 242, 246);
+                color: black; 
+            }
+        </style>
         """,
         unsafe_allow_html=True
     )   
