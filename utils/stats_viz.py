@@ -1736,7 +1736,7 @@ class HypothesisTest():
         fig = go.Figure()
 
         if self.distribution == 'z':
-            name = 'Standard Normal Distribution (Z-Distribution)'
+            name = 'Z-Distribution'
         elif self.distribution == 't':
             name = 't-Distribution'
         elif self.distribution == 'chi-square':
