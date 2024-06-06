@@ -40,7 +40,7 @@ def main():
     # Set up sticky header
     setup_sticky_header(header)
 
-    col1, col2 = st.columns([0.5, 0.5])
+    col1, col2 = st.columns([0.45, 0.55])
     with col1:
         # User selection: Dataset
         st.write(
