@@ -11,7 +11,7 @@ def display_homepage_formulas(
 
     st.write(
         "<span style='font-size:16px; font-weight:bold;'>Notation</span>", 
-        f"<span style='font-size:14px; font-weight:bold; margin-left: 50px;'>", notation, "</span>", 
+        f"<span style='font-size:14px; font-weight:bold; margin-left: 48px;'>", notation, "</span>", 
         unsafe_allow_html=True)
     
     if type == 'Discrete':
