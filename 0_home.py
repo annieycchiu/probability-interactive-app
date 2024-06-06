@@ -8,7 +8,8 @@ def main():
     st.set_page_config(
         page_title='MSDS504',
         page_icon=':bar_chart:',
-        layout='wide'
+        layout='wide',
+        initial_sidebar_state='auto' # hides the sidebar on small devices and shows it otherwise
     )
 
     # Add USF logo

@@ -11,7 +11,7 @@ def main():
         page_title='Exponential Distribution',
         page_icon=':bar_chart:',
         layout='wide',
-        initial_sidebar_state='collapsed'
+        initial_sidebar_state='auto' # hides the sidebar on small devices and shows it otherwise
     )
 
     # Add logo
