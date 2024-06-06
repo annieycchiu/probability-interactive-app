@@ -34,7 +34,7 @@ def main():
                 unsafe_allow_html=True)
             marginal_x = st.radio(
                 'Marginal x Plot Type', 
-                ['histogram', 'box', 'violin', 'rug'], 
+                ['histogram', 'box', 'violin'], 
                 horizontal=True, 
                 label_visibility='collapsed')
             st.write('')
@@ -56,7 +56,7 @@ def main():
                 unsafe_allow_html=True)
             marginal_y = st.radio(
                 'Marginal y Plot Type', 
-                ['histogram', 'box', 'violin', 'rug'], 
+                ['histogram', 'box', 'violin'], 
                 horizontal=True, 
                 index=1,
                 label_visibility='collapsed')
