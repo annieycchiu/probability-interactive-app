@@ -1,6 +1,6 @@
 # Binomial distribution
 binomial_notation = r'$X \sim \mathrm{Bin}(n, p)$'
-binomial_pmf = r'$f(k) = \Pr(X=k) = \binom{n}{k} p^k (1-p)^{n-k} \quad \text{for } k = 0, 1, 2, ..., n$'
+binomial_pmf = r'$f(k) = \Pr(X=k) = \binom{n}{k} p^k (1-p)^{n-k} \quad \text{for } k = 0, 1, ..., n$'
 binomial_cdf = r'$F(k) = \Pr(X \leq k) = \sum_{i=0}^{k} \binom{n}{i} p^{i} (1-p)^{n-i}$'
 binomial_exp = r'$E[X] = np$'
 binomial_var = r'$Var(X) = np(1-p)$'
