@@ -4,41 +4,41 @@ def display_homepage_formulas(
         title, notation, pmf_pdf, cdf, exp, var, type=['Discrete', 'Continuous']):
     
     st.write(
-        "<span style='font-size:22px; font-weight:bold;'>", title, "</span>",
+        "<span style='font-size:18px; font-weight:bold;'>", title, "</span>",
         unsafe_allow_html=True)
 
     st.write('')
 
     st.write(
-        "<span style='font-size:18px; font-weight:bold;'>Notation</span>", 
-        f"<span style='font-size:16px; font-weight:bold; margin-left: 53px;'>", notation, "</span>", 
+        "<span style='font-size:16px; font-weight:bold;'>Notation</span>", 
+        f"<span style='font-size:14px; font-weight:bold; margin-left: 53px;'>", notation, "</span>", 
         unsafe_allow_html=True)
     
     if type == 'Discrete':
         st.write(
-            "<span style='font-size:18px; font-weight:bold;'>PMF</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 85px;'>", pmf_pdf, "</span>", 
+            "<span style='font-size:16px; font-weight:bold;'>PMF</span>", 
+            f"<span style='font-size:14px; font-weight:bold; margin-left: 85px;'>", pmf_pdf, "</span>", 
             unsafe_allow_html=True)
     elif type == 'Continuous':
         st.write(
-            "<span style='font-size:18px; font-weight:bold;'>PDF</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left: 85px;'>", pmf_pdf, "</span>", 
+            "<span style='font-size:16px; font-weight:bold;'>PDF</span>", 
+            f"<span style='font-size:14px; font-weight:bold; margin-left: 85px;'>", pmf_pdf, "</span>", 
             unsafe_allow_html=True)
 
 
     st.write(
-        "<span style='font-size:18px; font-weight:bold;'>CDF</span>", 
-        f"<span style='font-size:16px; font-weight:bold; margin-left: 85px;'>", cdf, "</span>", 
+        "<span style='font-size:16px; font-weight:bold;'>CDF</span>", 
+        f"<span style='font-size:14px; font-weight:bold; margin-left: 85px;'>", cdf, "</span>", 
         unsafe_allow_html=True)
 
     st.write(
-        "<span style='font-size:18px; font-weight:bold;'>Expectation</span>", 
-        f"<span style='font-size:16px; font-weight:bold; margin-left: 20px;'>", exp, "</span>", 
+        "<span style='font-size:16px; font-weight:bold;'>Expectation</span>", 
+        f"<span style='font-size:14px; font-weight:bold; margin-left: 20px;'>", exp, "</span>", 
         unsafe_allow_html=True)
 
     st.write(
-        "<span style='font-size:18px; font-weight:bold;'>Variance</span>", 
-        f"<span style='font-size:16px; font-weight:bold; margin-left: 45px;'>", var, "</span>", 
+        "<span style='font-size:16px; font-weight:bold;'>Variance</span>", 
+        f"<span style='font-size:14px; font-weight:bold; margin-left: 45px;'>", var, "</span>", 
         unsafe_allow_html=True)
     
 
