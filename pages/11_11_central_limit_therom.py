@@ -120,9 +120,9 @@ def main():
 
         st.write(
             "<span style='font-size:18px; font-weight:bold; margin-left:30px;'>Mean</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left:30px;'>", exp_formula, "</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left:10px;'>$=$</span>",
-            f"<span style='font-size:20px; font-weight:bold;'>", round(exp, 3), "</span>",
+            f"<span style='font-size:16px; font-weight:bold; margin-left:25px;'>", exp_formula, "</span>", 
+            f"<span style='font-size:16px; font-weight:bold; margin-left:8px;'>$=$</span>",
+            f"<span style='font-size:18px; font-weight:bold; margin-left:8px; background-color: rgba(255, 0, 0, 0.4);'>", str(round(exp, 2)), "</span>",
             unsafe_allow_html=True)
         st.write('')
 
@@ -172,10 +172,9 @@ def main():
         mean_of_sample_means = Clt.mean_of_sample_means
 
         st.write(
-            "<span style='font-size:18px; font-weight:bold; margin-left:30px;'>Mean</span>", 
-            # f"<span style='font-size:16px; font-weight:bold; margin-left:50px;'>", exp_formula, "</span>", 
-            f"<span style='font-size:16px; font-weight:bold; margin-left:10px;'>$=$</span>",
-            f"<span style='font-size:20px; font-weight:bold;'>", round(mean_of_sample_means, 3), "</span>",
+            "<span style='font-size:18px; font-weight:bold; margin-left:30px;'>Mean</span>",  
+            f"<span style='font-size:16px; font-weight:bold; margin-left:8px;'>$=$</span>",
+            f"<span style='font-size:18px; font-weight:bold; margin-left:8px; background-color: rgba(255, 0, 0, 0.4);'>", str(round(mean_of_sample_means, 2)), "</span>",
             unsafe_allow_html=True)
         st.write('')
 
