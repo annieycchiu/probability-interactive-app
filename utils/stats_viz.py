@@ -1308,7 +1308,7 @@ class GammaDistribution:
         """
         Calculate the probability density function (PDF) for the gamma distribution.
         """
-        self.pdf_vals = (1/(self.scale**self.shape * np.math.gamma(self.shape))) * (self.x_vals**(self.shape - 1)) * np.exp(-self.x_vals/self.scale)
+        self.pdf_vals = (1/(self.scale**self.shape * math.gamma(self.shape))) * (self.x_vals**(self.shape - 1)) * np.exp(-self.x_vals/self.scale)
 
     def calculate_cdf(self):
         """
@@ -1478,13 +1478,18 @@ class CentralLimitTheorm():
         fig = go.Figure(data=[sample_means_trace], layout=layout)
 
         # Add vertical line for the mean of sampling distribution
-        fig.add_vline(
-            x=self.mean_of_sample_means, 
-            line={'color': self.colors['USF_Gray'], 'dash': 'dash', 'width': 2.5},
-            annotation_text=f"Mean: {self.mean_of_sample_means:.3f}", 
-            annotation_font_size=16,
-            annotation_font_color=self.colors['USF_Gray'],
-            annotation_position="top")
+        fig.add_shape(
+            type='line',
+            x0=self.mean_of_sample_means, y0=0, x1=self.mean_of_sample_means, y1=1,
+            xref='x', yref='y domain',
+            line=dict(color=self.colors['Red'], width=3))
+        
+        fig.add_annotation(
+            x=self.mean_of_sample_means, y=1.1, 
+            xref='x', yref='y domain',
+            text=f'Mean {round(self.mean_of_sample_means, 2)}', 
+            showarrow=False, 
+            font=dict(size=14, color=self.colors['Red']))
 
         # Show plot
         st.plotly_chart(fig, use_container_width=True)
