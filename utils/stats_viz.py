@@ -1308,7 +1308,7 @@ class GammaDistribution:
         """
         Calculate the probability density function (PDF) for the gamma distribution.
         """
-        self.pdf_vals = (1/(self.scale**self.shape * np.math.gamma(self.shape))) * (self.x_vals**(self.shape - 1)) * np.exp(-self.x_vals/self.scale)
+        self.pdf_vals = (1/(self.scale**self.shape * math.gamma(self.shape))) * (self.x_vals**(self.shape - 1)) * np.exp(-self.x_vals/self.scale)
 
     def calculate_cdf(self):
         """
