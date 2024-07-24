@@ -1573,15 +1573,27 @@ class BivariateNormalDistribution:
 
     def calculate_bivariate_normal_density(self):
         pi = np.pi
-        
-        self.phi = np.exp(
-            -(
-                (self.X1 - self.mean_x1)**2 / (2 * self.std_x1**2) 
-                - 2 * self.r * (self.X1 - self.mean_x1) * (self.X2 - self.mean_x2) / (self.std_x1 * self.std_x2) 
-                + (self.X2 - self.mean_x2)**2 / (2 * self.std_x2**2)
-            ) / (1 - self.r**2)
-        ) / (
-            2 * pi * self.std_x1 * self.std_x2 * np.sqrt(1 - self.r**2)
+        epsilon = 1e-8  # A small number to avoid divide by zero
+
+        # Ensure standard deviations are not zero
+        std_x1 = max(self.std_x1, epsilon)
+        std_x2 = max(self.std_x2, epsilon)
+
+        # Clamp correlation coefficient to be within (-1 + epsilon, 1 - epsilon)
+        r = np.clip(self.r, -1 + epsilon, 1 - epsilon)
+
+        # Calculate the exponent part, with a safeguard against overflow
+        exp_argument = -(
+            (self.X1 - self.mean_x1)**2 / (2 * std_x1**2) 
+            - 2 * r * (self.X1 - self.mean_x1) * (self.X2 - self.mean_x2) / (std_x1 * std_x2) 
+            + (self.X2 - self.mean_x2)**2 / (2 * std_x2**2)
+        ) / (1 - r**2)
+
+        # Apply a maximum limit to avoid overflow in np.exp
+        exp_argument = np.minimum(exp_argument, 700)
+
+        self.phi = np.exp(exp_argument) / (
+            2 * pi * std_x1 * std_x2 * np.sqrt(1 - r**2)
         )
 
     def plot_2D_contour(self):

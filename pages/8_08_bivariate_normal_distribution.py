@@ -29,7 +29,7 @@ def main():
                 unsafe_allow_html=True)
             
             mean_x1 = st.slider("Mean of X1", 5.0, 15.0, 7.0)
-            std_x1 = st.slider("Standard Deviation of X1", 1.0, 5.0, 1.0)
+            std_x1 = st.slider("Standard Deviation of X1", 0.0, 5.0, 1.0)
 
         with col2:
             st.write(
@@ -37,7 +37,7 @@ def main():
                 unsafe_allow_html=True)
             
             mean_x2 = st.slider("Mean of X2", 5.0, 15.0, 10.0)
-            std_x2 = st.slider("Standard Deviation of X2", 1.0, 5.0, 3.0)
+            std_x2 = st.slider("Standard Deviation of X2", 0.0, 5.0, 3.0)
 
         with col3:
             st.write(
